@@ -1,0 +1,9 @@
+execute_script recursion_script2
+add
+namr
+10001
+10001
+10001
+
+
+print_ascending
