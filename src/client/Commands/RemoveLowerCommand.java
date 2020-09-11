@@ -1,7 +1,8 @@
 package client.Commands;
 
-import server.Dataset;
 import DataClasses.Ticket;
+import DataClasses.Comparators.PriceComparator;
+import client.ClientMediator;
 /**
  * Ticket parametrized command
  * @author merdwed
@@ -17,9 +18,9 @@ public class RemoveLowerCommand extends TicketParametrizedCommand {
      */
     @Override
     public void execute(){
-        for(Ticket element:Dataset.getCurrentInstance().getSortedArrayList(Dataset.priceComparator))
+        for(Ticket element:ClientMediator.getInstance().getSortedArrayList(new PriceComparator()))
             if(element.getPrice().compareTo(parameter.getPrice())<0)
-            Dataset.getCurrentInstance().remove(element.getId());
+            ClientMediator.getInstance().remove(element.getId());
     }
     @Override
     public String getDocumentation(){

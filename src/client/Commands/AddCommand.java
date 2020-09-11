@@ -1,5 +1,6 @@
 package client.Commands;
-import server.Dataset;
+
+import client.ClientMediator;
 
 /**
  * Ticket parametrized command
@@ -16,7 +17,7 @@ public class AddCommand extends TicketParametrizedCommand {
      */
     @Override
     public void execute(){
-        Dataset.getCurrentInstance().add(parameter);
+        ClientMediator.getInstance().add(parameter);
     }
 
     /**

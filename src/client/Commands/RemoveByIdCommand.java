@@ -1,8 +1,10 @@
 package client.Commands;
 
-import server.Dataset;
+import client.ClientMediator;
+
 /**
  * Long parametrized command
+ * 
  * @author merdwed
  * @see CommandFactory
  * @see CommandParameterDistributor
@@ -16,7 +18,7 @@ public class RemoveByIdCommand extends LongParametrizedCommand{
      */
     @Override
     public void execute(){
-        Dataset.getCurrentInstance().remove(parameter);
+        ClientMediator.getInstance().remove(parameter);
     }
     /**
      * @see Command#getDocumentation()

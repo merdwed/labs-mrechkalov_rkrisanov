@@ -1,5 +1,7 @@
 package client.Commands;
-import server.Dataset;
+
+import client.ClientMediator;
+import DataClasses.Comparators.PriceComparator;
 /**
  * Ticket parametrized command
  * @author merdwed
@@ -15,8 +17,8 @@ public class AddIfMaxCommand extends TicketParametrizedCommand {
      */
     @Override
     public void execute(){
-        if(Dataset.getCurrentInstance().getSortedArrayList(Dataset.priceComparator).get(0).getPrice().compareTo(parameter.getPrice()) < 0)
-            Dataset.getCurrentInstance().add(parameter);
+        if(ClientMediator.getInstance().getSortedArrayList(new PriceComparator()).get(0).getPrice().compareTo(parameter.getPrice()) < 0)
+            ClientMediator.getInstance().add(parameter);
     }
     /**
      * @see Command#getDocumentation()

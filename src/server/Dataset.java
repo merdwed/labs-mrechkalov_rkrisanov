@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import DataClasses.Ticket;
+import DataClasses.Comparators.IdComparator;
+import DataClasses.Comparators.PriceComparator;
+import DataClasses.Comparators.TicketTypeComparator;
 
 /**
  * @author Drukharion
  * @see DataClasses.CollectionInterface
  */
-public class Dataset implements CollectionInterface {
+public class Dataset implements ServerCollectionInterface {
     private static Dataset currentInstance=new Dataset();
 
     public static Dataset getCurrentInstance() {
@@ -62,6 +65,9 @@ public class Dataset implements CollectionInterface {
         Collections.sort(temp,comp);
         return temp;
     }
+    public ArrayList<Ticket> getArrayListCollection(){
+        return new ArrayList<Ticket>(collection);
+    }
 
     /**
      * @return size of collection
@@ -73,26 +79,5 @@ public class Dataset implements CollectionInterface {
     public static Comparator<Ticket>idComparator = new IdComparator();
     public static Comparator<Ticket>ticketTypeComparator=new TicketTypeComparator().thenComparing(new PriceComparator());
 
-    /**
-     * @see java.util.Comparator
-     */
-    private static class IdComparator implements Comparator<Ticket>{
 
-        public int compare(Ticket t1, Ticket t2){
-            return Long.compare(t1.getId(),t2.getId());
-        }
-    }
-    private static class PriceComparator implements Comparator<Ticket>{
-        @Override
-        public int compare(Ticket t1, Ticket t2){
-            return Double.compare(t1.getPrice(),t2.getPrice());
-        }
-    }
-
-    private static class TicketTypeComparator implements Comparator<Ticket>{
-        @Override
-        public int compare(Ticket o1, Ticket o2) {
-            return o1.getType().compareTo(o2.getType());
-        }
-    }
 }

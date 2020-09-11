@@ -1,8 +1,9 @@
 package client.Commands;
 
-import server.Dataset;
 import DataClasses.Ticket;
 import DataClasses.TicketType;
+import DataClasses.Comparators.TicketTypeComparator;
+import client.ClientMediator;
 /**
  * TicketType parametrized command
  * @author merdwed
@@ -18,7 +19,7 @@ public class FilterLessThanTypeCommand extends TicketTypeParametrizedCommand {
      */
     @Override
     public void execute(){
-        for(Ticket element: Dataset.getCurrentInstance().getSortedArrayList(Dataset.ticketTypeComparator))
+        for(Ticket element: ClientMediator.getInstance().getSortedArrayList(new TicketTypeComparator()))
             if(element.getType().compareTo(parameter) <= 0)
                 System.out.println(element.toString());
     }

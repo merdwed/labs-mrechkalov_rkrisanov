@@ -1,6 +1,7 @@
 package client.Commands;
-import server.Dataset;
+
 import DataClasses.Ticket;
+import client.ClientMediator;
 /**
  * Ticket parametrized command
  * @author merdwed
@@ -58,10 +59,10 @@ public class UpdateCommand extends ParameterizedCommand{
      */
     @Override
     public void execute(){
-        Dataset.getCurrentInstance().remove(idParameter);
+        ClientMediator.getInstance().remove(idParameter);
         if(ticketParameter!=null)
         ticketParameter.setId(idParameter);
-        Dataset.getCurrentInstance().add(ticketParameter);
+        ClientMediator.getInstance().add(ticketParameter);
     }
     /**
      * @see Command#getDocumentation()

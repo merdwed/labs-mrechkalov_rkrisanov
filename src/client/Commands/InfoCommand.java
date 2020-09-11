@@ -1,12 +1,13 @@
 package client.Commands;
 
+import client.ClientMediator;
+
 /**
  * @author merdwed
  * @see CommandFactory
  * @see CommandParameterDistributor
  * @see Command
  */
-import server.Dataset;
 
 public class InfoCommand extends Command {
     /**
@@ -16,7 +17,7 @@ public class InfoCommand extends Command {
      */
     @Override
     public void execute(){
-        System.out.println(Dataset.getCurrentInstance().getInfo());
+        System.out.println(ClientMediator.getInstance().getInfo());
     }
     /**
      * @see Command#getDocumentation()

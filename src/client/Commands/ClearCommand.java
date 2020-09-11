@@ -1,7 +1,8 @@
 package client.Commands;
 
-import server.Dataset;
 import DataClasses.Ticket;
+import DataClasses.Comparators.IdComparator;
+import client.ClientMediator;
 
 /**
  * @author merdwed
@@ -17,8 +18,8 @@ public class ClearCommand extends Command {
      */
     @Override
     public void execute(){
-        for(Ticket element:Dataset.getCurrentInstance().getSortedArrayList(Dataset.idComparator))
-            Dataset.getCurrentInstance().remove(element.getId());
+        for(Ticket element:ClientMediator.getInstance().getSortedArrayList(new IdComparator()))
+            ClientMediator.getInstance().remove(element.getId());
     }
 
     /**

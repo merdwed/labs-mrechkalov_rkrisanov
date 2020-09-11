@@ -1,7 +1,8 @@
 package client.Commands;
 
-import server.Dataset;
 import DataClasses.Ticket;
+import DataClasses.Comparators.IdComparator;
+import client.ClientMediator;
 /**
  * @author merdwed
  * @see CommandFactory
@@ -17,7 +18,7 @@ public class ShowCommand extends Command {
      */
     @Override
     public void execute(){
-        for(Ticket element:Dataset.getCurrentInstance().getSortedArrayList(Dataset.idComparator))
+        for(Ticket element:ClientMediator.getInstance().getSortedArrayList(new IdComparator()))
         System.out.println(element.toString());
     }
     /**

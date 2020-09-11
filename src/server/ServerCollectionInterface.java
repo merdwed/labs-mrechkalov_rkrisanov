@@ -1,14 +1,11 @@
 package server;
-
-import java.util.Comparator;
-
 import DataClasses.Ticket;
 
 /**
- * interface standardizes interaction with collection
+ * interface standardizes interaction with collection on server part
  * @author merdwed
  */
-interface CollectionInterface {
+interface ServerCollectionInterface {
     /**
      * @param element be added to collection
      */
@@ -20,10 +17,9 @@ interface CollectionInterface {
     public void remove(Long id);
 
     /**
-     * @param comp comparator for sorting
-     * @return sorted ArrayList of all items in collection
+     * @return returned ArrayList of all items in collection
      */
-    public java.util.ArrayList<Ticket> getSortedArrayList(Comparator<Ticket> comp);
+    public java.util.ArrayList<Ticket> getArrayListCollection();
 
     /**
      * @return String-format common information about current collection

@@ -1,5 +1,8 @@
 package client.Commands;
-import server.Dataset;
+
+import DataClasses.Comparators.PriceComparator;
+import client.ClientMediator;
+
 /**
  * @author merdwed
  * @see CommandFactory
@@ -15,7 +18,7 @@ public class PrintAscendingCommand extends Command {
      */
     @Override
     public void execute(){
-        for(DataClasses.Ticket element:Dataset.getCurrentInstance().getSortedArrayList(Dataset.priceComparator))
+        for(DataClasses.Ticket element:ClientMediator.getInstance().getSortedArrayList(new PriceComparator()))
             System.out.println(element.toString());
     }
     /**
