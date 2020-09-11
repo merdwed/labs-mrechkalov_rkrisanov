@@ -25,7 +25,6 @@ public class CommandFactory {
         existingCommands.put("print_ascending",PrintAscendingCommand.class);
         existingCommands.put("remove_by_id",RemoveByIdCommand.class);
         existingCommands.put("remove_lower",RemoveLowerCommand.class);
-        existingCommands.put("save",SaveCommand.class);
         existingCommands.put("show",ShowCommand.class);
         existingCommands.put("update",UpdateCommand.class);
     }
