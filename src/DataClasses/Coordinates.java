@@ -1,11 +1,15 @@
 package DataClasses;
 
+import java.io.Serializable;
+
 /**
  * @author Drukharion
  */
 
-public class Coordinates {
+public class Coordinates implements Serializable {
     public Coordinates(float x, long y){
+        this.x=x;
+        this.y=y;
     };
     public Coordinates(){
     };

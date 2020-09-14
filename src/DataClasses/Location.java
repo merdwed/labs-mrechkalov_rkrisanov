@@ -1,10 +1,16 @@
 package DataClasses;
 
+import java.io.Serializable;
+
 /**
  * @author Drukharion
  */
-public class Location {
+public class Location implements Serializable {
     public Location(Double x,long y,long z,String name){
+        this.x=x;
+        this.y=y;
+        this.z=z;
+        this.name=name;
     }
     public Location(){
     }

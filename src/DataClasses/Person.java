@@ -1,11 +1,16 @@
 package DataClasses;
 
+import java.io.Serializable;
+
 /**
  * @author Drukharion
  */
 
-public class Person {
+public class Person implements Serializable {
     public Person(double height, Integer weight, Location location){
+        this.height=height;
+        this.weight=weight;
+        this.location=location;
     }
     public Person(){
     }

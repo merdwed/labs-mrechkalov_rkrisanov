@@ -52,7 +52,7 @@ public class CommandFactory {
         Command command=null;
         try{command = (Command)commandClass.newInstance();}
         catch(Exception e)
-        {System.out.println("programmer write some really bad code"); System.out.println(e.getMessage());}
+        {System.out.println("programmer wrote some really bad code"); System.out.println(e.getMessage());}
 
 
         return command;

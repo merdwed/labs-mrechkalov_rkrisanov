@@ -1,10 +1,17 @@
 package DataClasses;
 
+import java.io.Serializable;
+
 /**
  * @author Drukharion
  */
-public class Ticket {
-    public Ticket(TicketType type, String name,Coordinates coordinates,Person person){
+public class Ticket implements Serializable {
+    public Ticket(TicketType type,Double price, String name,Coordinates coordinates,Person person){
+        this.type = type;
+        this.price=price;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.person = person;
     }
 
     /**
@@ -226,6 +233,7 @@ public class Ticket {
     public String getPersonLocationName(){
         return person.getLocationName();
     }
+
 
     /**
      * @return ticket as string
