@@ -1,8 +1,10 @@
 package server;
 import DataClasses.Ticket;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ServerMediator implements ServerCollectionInterface{
+public class ServerMediator implements ServerCollectionInterface, Serializable {
     private static ServerMediator instance=new ServerMediator();
     public static ServerMediator getInstance(){//yeah, its Singleton and what, how can I make better?
         return instance;

@@ -1,5 +1,6 @@
 package server;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,9 +12,9 @@ import DataClasses.Comparators.TicketTypeComparator;
 
 /**
  * @author Drukharion
- * @see DataClasses.CollectionInterface
+ * @see server.ServerCollectionInterface
  */
-public class Dataset implements ServerCollectionInterface {
+public class Dataset implements ServerCollectionInterface, Serializable {
     private static Dataset currentInstance=new Dataset();
 
     public static Dataset getCurrentInstance() {
@@ -29,7 +30,7 @@ public class Dataset implements ServerCollectionInterface {
         if(element==null)return;
         if(element.getId()==null || element.getId()==0) {
             ArrayList<Ticket> temp = getSortedArrayList(idComparator);
-            Long index = Long.valueOf(1);
+            Long index = 1L;
             for (Ticket el : temp) {
                 if (!el.getId().equals(index)) {
                     break;
@@ -62,7 +63,7 @@ public class Dataset implements ServerCollectionInterface {
     public ArrayList<Ticket> getSortedArrayList(Comparator<Ticket> comp) {
 
         ArrayList<Ticket> temp=new ArrayList<Ticket>(collection);
-        Collections.sort(temp,comp);
+        temp.sort(comp);
         return temp;
     }
     public ArrayList<Ticket> getArrayListCollection(){
