@@ -6,8 +6,8 @@ import java.net.SocketAddress;
 import java.nio.channels.DatagramChannel;
 
 public class Connection {
-    public Connection() {
-        rebind();
+    private Connection() {
+        //rebind();
     }
 
     private static Connection connection = new Connection();

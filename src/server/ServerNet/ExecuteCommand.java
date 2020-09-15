@@ -9,16 +9,15 @@ public class ExecuteCommand {
     public static void executeCommand(CommandType commandType) throws IOException {
         switch (commandType){
             case ADD:{AddCommand.execute();break;}
-            case ADD_IF_MAX:{break;}
-            case ADD_IF_MIN:{break;}
+            case ADD_IF_MAX:{AddIfMaxCommand.execute();break;}
+            case ADD_IF_MIN:{AddIfMinCommand.execute();break;}
             case SHOW:{ShowCommand.execute();break;}
             case INFO:{InfoCommand.execute();break;}
-            case HELP:{break;}
-            case CLEAR:{break;}
-            case REMOVE_BY_ID:{break;}
-            case REMOVE_LOWER:{break;}
-            case UPDATE:{break;}
-            case EXECUTE_SCRIPT:{break;}
+            case HELP:{HelpCommand.execute();break;}
+            case CLEAR:{ClearCommand.execute();break;}
+            case REMOVE_BY_ID:{RemoveByIdCommand.execute();break;}
+            case REMOVE_LOWER:{RemoveLowerCommand.execute();break;}
+            case UPDATE:{UpdateCommand.execute();break;}
             default:
                 System.out.println("Команда не найдена");
         }

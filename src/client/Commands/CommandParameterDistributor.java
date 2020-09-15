@@ -17,7 +17,7 @@ public class CommandParameterDistributor {
      * @see ParameterizedCommand#pushParameter(Object)
      * @see ParameterizedCommand#parameterClassIterator()
      * @param command just put your Command here
-     * @param vararg input string after name of string in console
+     * @param vararg input string after name of command in console
      */
     public static void fillIn(Command command, String vararg)throws NoSourceException{
         if(command instanceof ParameterizedCommand) {

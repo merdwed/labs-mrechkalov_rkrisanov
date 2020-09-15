@@ -13,7 +13,6 @@ public enum CommandType implements Serializable {
     REMOVE_BY_ID,
     REMOVE_LOWER,
     UPDATE,
-    EXECUTE_SCRIPT,
     EXIT;
     private static final long serialVersionUID = 12L;
 }
