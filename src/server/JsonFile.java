@@ -24,7 +24,7 @@ public class JsonFile {
     /**
      * constraction without param
      */
-    public JsonFile(){
+    private JsonFile(){
     }
     private static JsonFile jsonfile=new JsonFile();
     public static JsonFile getJsonFile() {
@@ -64,16 +64,15 @@ public class JsonFile {
         FileInputStream fileInputStream = new FileInputStream(file);
         BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream, 100);
         Scanner scanner = new Scanner(bufferedInputStream);
-        String string = "";
+        StringBuilder string = new StringBuilder();
         while (scanner.hasNextLine())
-            string += scanner.nextLine();
-        Ticket[] tickets = gson.fromJson(string, Ticket[].class);
+            string.append(scanner.nextLine());
+        Ticket[] tickets = gson.fromJson(string.toString(), Ticket[].class);
         scanner.close();
 
         for (Ticket ticket : tickets) {
             dataset.add(ticket);
         }
-        return;
 
     }
 

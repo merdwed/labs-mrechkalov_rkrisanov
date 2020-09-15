@@ -1,4 +1,4 @@
-package server.ServerNet;
+package client.ClientNet;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -7,6 +7,7 @@ import java.nio.channels.DatagramChannel;
 
 public class Connection {
     private Connection() {
+        rebind();
     }
 
     private static Connection connection = new Connection();
@@ -14,23 +15,21 @@ public class Connection {
 
     private int PORT = 8989;
     private String hostname = "localhost";
-    private DatagramChannel server;
-    private InetSocketAddress iAdd = new InetSocketAddress(hostname, PORT);
-
-    private SocketAddress remoteAdd;
+    private DatagramChannel client;
+    private InetSocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
 
     {
         try {
-            server = DatagramChannel.open();
+            client = DatagramChannel.open();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     //bind inet with current hostname and port
-    public void rebind(){
+    private void rebind(){
         try {
-            server.bind(iAdd);
+            client.bind(null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,27 +51,15 @@ public class Connection {
         this.hostname = hostname;
     }
 
-    public DatagramChannel getServer() {
-        return server;
+    public DatagramChannel getClient() {
+        return client;
     }
 
-    public InetSocketAddress getiAdd() {
-        return iAdd;
+    public SocketAddress getServerAddress() {
+        return serverAddress;
     }
 
-    protected SocketAddress getRemoteAdd() {
-        return remoteAdd;
-    }
-
-    protected void setRemoteAdd(SocketAddress remoteAdd) {
-        this.remoteAdd = remoteAdd;
-    }
-
-    public void setServer(DatagramChannel server) {
-        this.server = server;
-    }
-
-    public void setiAdd(InetSocketAddress iAdd) {
-        this.iAdd = iAdd;
+    private void setServerAddress(SocketAddress remoteAdd) {
+        this.serverAddress = serverAddress;
     }
 }

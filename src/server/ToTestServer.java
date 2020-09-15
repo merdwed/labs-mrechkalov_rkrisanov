@@ -1,4 +1,4 @@
-package server.ServerNet;
+package server;
 
 import DataClasses.*;
 
@@ -7,81 +7,126 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Scanner;
+
+import client.ClientNet.*;
 
 
-public class App {
+public class ToTestServer {
 
     public static void main(String[] args) throws IOException {
-        ByteBuffer byteBuffer = ByteBuffer.allocate(10240);
-        CommandType commandType = CommandType.ADD;
+//        ByteBuffer byteBuffer = ByteBuffer.allocate(4096);
+//        CommandType commandType = CommandType.ADD;
         Location location = new Location(12d,23,34,"HYE");
         Coordinates coordinates = new Coordinates(1,2);
         Person person = new Person(12,32,location);
         Ticket ticket = new Ticket(TicketType.VIP,98.2,"Justion",coordinates,person);
-        CommandType commandType2 = CommandType.INFO;
-
-
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(commandType);
-        objectOutputStream.writeObject(ticket);
-        objectOutputStream.flush();
-        byteArrayOutputStream.flush();
-        objectOutputStream.close();
-        byteArrayOutputStream.close();
-        //objectOutputStream.flush();
-        //byte[] bytes = byteArrayOutputStream.toByteArray();
-        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
-//        for (byte i:
-//             byteArrayOutputStream.toByteArray()) {
-//            System.out.println(i);
+//
+//        //Формирование команды ADD
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+//        objectOutputStream.writeObject(commandType);
+//        objectOutputStream.writeObject(ticket);
+//        objectOutputStream.flush();
+//        byteArrayOutputStream.flush();
+//        objectOutputStream.close();
+//        byteArrayOutputStream.close();
+//        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
+//
+//
+//        DatagramChannel client = DatagramChannel.open();
+//
+//        client.bind(null);
+//        InetSocketAddress serverAddress = new InetSocketAddress("localhost", 8989);
+//        //Отправка ADD
+//        client.send(byteBuffer.duplicate(), serverAddress);
+//        client.send(byteBuffer.duplicate(), serverAddress);
+//        client.send(byteBuffer.duplicate(), serverAddress);
+//        //Формирование команды INFO
+//        CommandType commandType2 = CommandType.SHOW;
+//        byteArrayOutputStream = new ByteArrayOutputStream();
+//        objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+//        objectOutputStream.writeObject(commandType2);
+//        objectOutputStream.flush();
+//        byteArrayOutputStream.flush();
+//        objectOutputStream.close();
+//        byteArrayOutputStream.close();
+//        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
+//        client.send(byteBuffer, serverAddress);
+//
+//        byteBuffer= ByteBuffer.allocate(4096);
+//        client.receive(byteBuffer);
+//        System.out.println(byteBuffer.limit());
+//        System.out.println(byteBuffer.capacity());
+//        ByteArrayInputStream byteArrayInputStream;
+//        ObjectInputStream objectInputStream;
+//        byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
+//        objectInputStream = new ObjectInputStream(byteArrayInputStream);
+//        try {
+//            ArrayList size=(ArrayList)objectInputStream.readObject();
+//            System.out.println(size.toString());
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (EOFException e){
+//            System.out.println("Hyu tebe, a ne collection");
 //        }
+//        //Команда на выключение сервере
+//        byteArrayOutputStream = new ByteArrayOutputStream();
+//        objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+//        objectOutputStream.writeObject(CommandType.EXIT);
+//        objectOutputStream.flush();
+//        byteArrayOutputStream.flush();
+//        objectOutputStream.close();
+//        byteArrayOutputStream.close();
+//        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
+//        client.send(byteBuffer, serverAddress);
 
 
-        DatagramChannel client = DatagramChannel.open();
+        Scanner in = new Scanner(System.in);
+        CommandType commandType;
+        do {
+            PackageOut.getInstance().remake();
+            commandType = CommandType.valueOf(in.nextLine());
+            switch (commandType){
+                case ADD:{
+                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                    PackageOut.getInstance().getObjectOutputStream().writeObject(ticket);
+                    Answer.send();
+                    break;
+                }
+                case SHOW:{
+                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                    Answer.send();
+                    Request request = new Request();
+                    try {
+                        ArrayList hyy = (ArrayList)PackageIn.getInstance().getObjectInputStream().readObject();
+                        System.out.println(hyy.toString());
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case INFO:{
+                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                    Answer.send();
+                    Request request = new Request();
+                    try {
+                        String hyy = (String)PackageIn.getInstance().getObjectInputStream().readObject();
+                        System.out.println(hyy);
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case EXIT:{
+                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                    Answer.send();
+                    break;
+                }
+                default:{System.out.println("Hyy na");break;}
+            }
 
-        client.bind(null);
-        InetSocketAddress serverAddress = new InetSocketAddress("localhost", 8989);
 
-        client.send(byteBuffer, serverAddress);
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(commandType2);
-        objectOutputStream.flush();
-        byteArrayOutputStream.flush();
-        objectOutputStream.close();
-        byteArrayOutputStream.close();
-        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
-        client.send(byteBuffer, serverAddress);
-
-        byteBuffer.clear();
-        client.receive(byteBuffer);
-        //byteBuffer.flip();
-        ByteArrayInputStream byteArrayInputStream;
-        ObjectInputStream objectInputStream;
-        byteArrayInputStream = new ByteArrayInputStream(byteBuffer.array());
-        objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        String dataset;
-        try {
-            dataset = (String)objectInputStream.readObject();
-            System.out.println(dataset);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (EOFException e){
-            System.out.println("Hyu tebe, a ne collection");
-        }
-
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(CommandType.EXIT);
-        objectOutputStream.flush();
-        byteArrayOutputStream.flush();
-        objectOutputStream.close();
-        byteArrayOutputStream.close();
-        byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
-        client.send(byteBuffer, serverAddress);
+        } while (commandType != CommandType.EXIT);
     }
 }
