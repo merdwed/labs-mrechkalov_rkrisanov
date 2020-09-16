@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 /**
  * String parametrized command
  * @author merdwed

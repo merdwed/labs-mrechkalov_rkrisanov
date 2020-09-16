@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 
 import DataClasses.Comparators.PriceComparator;
 import client.ClientMediator;
@@ -17,10 +17,10 @@ public class PrintAscendingCommand extends Command {
      * @see Dataset#priceComparator
      */
     @Override
-    public void execute(){
-        for(DataClasses.Ticket element:ClientMediator.getInstance().getSortedArrayList(new PriceComparator()))
-            System.out.println(element.toString());
-    }
+    public void execute(){//по идеи эта команда должна запрашивать show у сервера и пересортировать полученный ответ 
+        //for(DataClasses.Ticket element:ClientMediator.getInstance().getSortedArrayList(new PriceComparator()))
+         //   System.out.println(element.toString());
+    } 
     /**
      * @see Command#getDocumentation()
      */

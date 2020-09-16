@@ -1,14 +1,15 @@
-package DataClasses;
+package DataClasses.CommandTypeUtils;
 
 import java.io.Serializable;
-
+/**
+ * all command which can execute on server. If you add new command, please add string name and full parameters name of this commandType to CommandTypeInformation
+ */
 public enum CommandType implements Serializable {
     ADD,
     ADD_IF_MAX,
     ADD_IF_MIN,
     SHOW,
     INFO,
-    HELP,
     CLEAR,
     REMOVE_BY_ID,
     REMOVE_LOWER,

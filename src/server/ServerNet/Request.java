@@ -1,6 +1,6 @@
 package server.ServerNet;
 
-import DataClasses.CommandType;
+import DataClasses.CommandTypeUtils.CommandType;
 
 import java.io.*;
 import java.nio.ByteBuffer;

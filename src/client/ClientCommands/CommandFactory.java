@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,21 +12,10 @@ public class CommandFactory {
      */
     private static java.util.Map<String, Class<? extends Command>> existingCommands=new java.util.HashMap<String, Class<? extends Command>>();
     static{
-        existingCommands.put("add",AddCommand.class);
-        existingCommands.put("add_if_max",AddIfMaxCommand.class);
-        existingCommands.put("add_if_min",AddIfMinCommand.class);
-        existingCommands.put("clear",ClearCommand.class);
         existingCommands.put("execute_script", ExecuteScriptCommand.class);
         existingCommands.put("exit",ExitCommand.class);
-        existingCommands.put("filter_by_price",FilterByPriceCommand.class);
-        existingCommands.put("filter_less_than_type",FilterLessThanTypeCommand.class);
-        existingCommands.put("help",HelpCommand.class);
-        existingCommands.put("info",InfoCommand.class);
         existingCommands.put("print_ascending",PrintAscendingCommand.class);
-        existingCommands.put("remove_by_id",RemoveByIdCommand.class);
-        existingCommands.put("remove_lower",RemoveLowerCommand.class);
-        existingCommands.put("show",ShowCommand.class);
-        existingCommands.put("update",UpdateCommand.class);
+        existingCommands.put("help",HelpCommand.class);
     }
 
     /**

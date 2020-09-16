@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 /**
  * special String parametrized command
  * Can be created when program can't find some things. Cannot be called by user

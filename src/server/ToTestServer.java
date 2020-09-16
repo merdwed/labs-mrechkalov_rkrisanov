@@ -1,7 +1,7 @@
 package server;
 
 import DataClasses.*;
-
+import DataClasses.CommandTypeUtils.CommandType;
 import java.io.*;
 import java.net.*;
 import java.nio.ByteBuffer;

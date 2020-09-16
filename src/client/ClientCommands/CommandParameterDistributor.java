@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 import DataClasses.TicketType;
 import DataClasses.Ticket;
 import client.ShellUtils.ShellParser;

@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 /**
  * the main abstract parent of all Long parametrized commands
  * @author merdwed

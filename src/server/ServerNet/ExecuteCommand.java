@@ -1,6 +1,6 @@
 package server.ServerNet;
 
-import DataClasses.CommandType;
+import DataClasses.CommandTypeUtils.CommandType;
 import java.io.IOException;
 
 import server.Commands.*;
@@ -13,7 +13,6 @@ public class ExecuteCommand {
             case ADD_IF_MIN:{AddIfMinCommand.execute();break;}
             case SHOW:{ShowCommand.execute();break;}
             case INFO:{InfoCommand.execute();break;}
-            case HELP:{HelpCommand.execute();break;}
             case CLEAR:{ClearCommand.execute();break;}
             case REMOVE_BY_ID:{RemoveByIdCommand.execute();break;}
             case REMOVE_LOWER:{RemoveLowerCommand.execute();break;}

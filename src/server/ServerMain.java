@@ -1,5 +1,5 @@
 package server;
-import DataClasses.CommandType;
+import DataClasses.CommandTypeUtils.CommandType;
 import server.ServerNet.*;
 
 import java.io.IOException;

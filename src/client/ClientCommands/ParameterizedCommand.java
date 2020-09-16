@@ -1,4 +1,4 @@
-package client.Commands;
+package client.ClientCommands;
 
 import java.util.Iterator;
 import java.util.Stack;
