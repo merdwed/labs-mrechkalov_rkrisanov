@@ -8,10 +8,8 @@ import java.io.IOException;
 
 public class RemoveByIdCommand extends Command {
     public static void execute(){
-        Long id;
         try {
-            id = PackageIn.getInstance().getObjectInputStream().readLong();
-            ServerMediator.getInstance().remove(id);
+            ServerMediator.getInstance().remove(PackageIn.getInstance().getObjectInputStream().readLong());
         } catch (IOException e) {
             e.printStackTrace();
         }

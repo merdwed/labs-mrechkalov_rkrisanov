@@ -12,8 +12,10 @@ public class AddIfMinCommand extends Command {
         Ticket ticket;
         try {
             ticket = (Ticket) PackageIn.getInstance().getObjectInputStream().readObject();
-            if(ServerMediator.getInstance().getSortedArrayList(new PriceComparator()).get(0).getPrice().compareTo(ticket.getPrice()) > 0)
+            if (ServerMediator.getInstance().getArrayListCollection().stream().allMatch(x -> x.getPrice().compareTo(ticket.getPrice()) >= 0))
                 ServerMediator.getInstance().add(ticket);
+//            if(ServerMediator.getInstance().getSortedArrayList(new PriceComparator()).get(0).getPrice().compareTo(ticket.getPrice()) > 0)
+//                ServerMediator.getInstance().add(ticket);
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

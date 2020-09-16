@@ -12,6 +12,7 @@ public class AddIfMaxCommand extends Command {
         Ticket ticket;
         try {
             ticket = (Ticket) PackageIn.getInstance().getObjectInputStream().readObject();
+
             if(ServerMediator.getInstance().getSortedArrayList(new PriceComparator()).get(0).getPrice().compareTo(ticket.getPrice()) < 0)
                 ServerMediator.getInstance().add(ticket);
         } catch (ClassNotFoundException | IOException e) {

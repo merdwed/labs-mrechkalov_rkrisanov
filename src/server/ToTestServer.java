@@ -83,50 +83,55 @@ public class ToTestServer {
 
 
         Scanner in = new Scanner(System.in);
-        CommandType commandType;
+        CommandType commandType=null;
         do {
             PackageOut.getInstance().remake();
-            commandType = CommandType.valueOf(in.nextLine());
-            switch (commandType){
-                case ADD:{
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(ticket);
-                    Answer.send();
-                    break;
-                }
-                case SHOW:{
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
-                    Answer.send();
-                    Request request = new Request();
-                    try {
-                        ArrayList hyy = (ArrayList)PackageIn.getInstance().getObjectInputStream().readObject();
-                        System.out.println(hyy.toString());
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+            try {
+                commandType = CommandType.valueOf(in.nextLine());
+                switch (commandType) {
+                    case ADD: {
+                        PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                        PackageOut.getInstance().getObjectOutputStream().writeObject(ticket);
+                        Answer.send();
+                        break;
                     }
-                    break;
-                }
-                case INFO:{
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
-                    Answer.send();
-                    Request request = new Request();
-                    try {
-                        String hyy = (String)PackageIn.getInstance().getObjectInputStream().readObject();
-                        System.out.println(hyy);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
+                    case SHOW: {
+                        PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                        Answer.send();
+                        Request request = new Request();
+                        try {
+                            ArrayList hyy = (ArrayList) PackageIn.getInstance().getObjectInputStream().readObject();
+                            System.out.println(hyy.toString());
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        }
+                        break;
                     }
-                    break;
+                    case INFO: {
+                        PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                        Answer.send();
+                        Request request = new Request();
+                        try {
+                            String hyy = (String) PackageIn.getInstance().getObjectInputStream().readObject();
+                            System.out.println(hyy);
+                        } catch (ClassNotFoundException classNotFoundException) {
+                            classNotFoundException.printStackTrace();
+                        }
+                        break;
+                    }
+                    case EXIT: {
+                        PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
+                        Answer.send();
+                        break;
+                    }
+                    default: {
+                        System.out.println("Hyy na");
+                        break;
+                    }
                 }
-                case EXIT:{
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
-                    Answer.send();
-                    break;
-                }
-                default:{System.out.println("Hyy na");break;}
+            } catch (IllegalArgumentException e) {
+                System.out.println("Hye tobye, a ne wrong commandType");
             }
-
-
         } while (commandType != CommandType.EXIT);
     }
 }

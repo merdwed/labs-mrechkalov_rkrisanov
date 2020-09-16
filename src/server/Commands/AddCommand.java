@@ -13,6 +13,7 @@ public class AddCommand extends Command {
         try {
             ticket = (Ticket) PackageIn.getInstance().getObjectInputStream().readObject();
             ServerMediator.getInstance().add(ticket);
+            //ServerMediator.getInstance().add((Ticket) PackageIn.getInstance().getObjectInputStream().readObject());
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }

@@ -17,6 +17,9 @@ public class ExecuteCommand {
             case CLEAR:{ClearCommand.execute();break;}
             case REMOVE_BY_ID:{RemoveByIdCommand.execute();break;}
             case REMOVE_LOWER:{RemoveLowerCommand.execute();break;}
+            case FILTER_BY_PRICE:{FilterByPriceCommand.execute();break;}
+            case FILTER_LESS_BY_TYPE:{FilterLessByTypeCommand.execute();break;}
+            case PRINT_ASCENDING:{FilterLessByTypeCommand.execute();break;}
             case UPDATE:{UpdateCommand.execute();break;}
             default:
                 System.out.println("Команда не найдена");
