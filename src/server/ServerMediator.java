@@ -1,9 +1,7 @@
 package server;
 import DataClasses.Ticket;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class ServerMediator implements ServerCollectionInterface {
@@ -20,9 +18,14 @@ public class ServerMediator implements ServerCollectionInterface {
         Dataset.getCurrentInstance().remove(id);
     }
 
+    public boolean exist(Long id){
+        return Dataset.getCurrentInstance().exist(id);
+    }
+
     public ArrayList<Ticket> getArrayListCollection(){
         return Dataset.getCurrentInstance().getArrayListCollection();
     }
+
     public ArrayList<Ticket> getSortedArrayList(Comparator<Ticket> comp) {
         ArrayList<Ticket> collection=ServerMediator.getInstance().getArrayListCollection();
         collection.sort(comp);

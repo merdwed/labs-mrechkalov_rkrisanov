@@ -1,14 +1,14 @@
 package server;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import DataClasses.Ticket;
 import DataClasses.Comparators.IdComparator;
 import DataClasses.Comparators.PriceComparator;
 import DataClasses.Comparators.TicketTypeComparator;
+import DataClasses.Ticket;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * @author Drukharion
@@ -54,6 +54,24 @@ public class Dataset implements ServerCollectionInterface, Serializable {
                 return;
             }
         }
+    }
+    public boolean exist(Long id){
+        if(id==null)return false;
+        for (Ticket element: collection) {
+            if(element.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+    public Ticket getTicket(Long id){
+        if(exist(id))
+        for (Ticket element: collection) {
+            if(element.getId().equals(id)){
+                return element;
+            }
+        }
+        return null;
     }
 
     /**

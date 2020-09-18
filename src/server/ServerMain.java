@@ -1,8 +1,12 @@
 package server;
-import DataClasses.CommandTypeUtils.CommandType;
-import server.ServerNet.*;
+import server.ServerNet.Answer;
+import server.ServerNet.Connection;
+import server.ServerNet.ExecuteCommand;
+import server.ServerNet.Request;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
 public class ServerMain {
@@ -10,9 +14,9 @@ public class ServerMain {
     private final static String HOST_NAME = "localhost";
     public static void main(String[] args) throws IOException {
 //        String fileName="NewCollection";
-//        fileName="dataset example/dataset1";
-//        JsonFile.getJsonFile().setPathName(fileName);
-//        JsonFile.getJsonFile().readJSON();
+        String fileName="dataset example/dataset1";
+        JsonFile.getJsonFile().setPathName(fileName);
+        JsonFile.getJsonFile().readJSON();
 //        if(args.length>0) {
 //            fileName=args[0];
 //            JsonFile.getJsonFile().setPathName(fileName);
@@ -26,11 +30,21 @@ public class ServerMain {
         Connection.getInstance().setHostname(HOST_NAME);
         Connection.getInstance().setiAdd(new InetSocketAddress(HOST_NAME,PORT));
         Connection.getInstance().rebind();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while(true) {
             Request request = new Request();
-            if (request.getCommandType()==CommandType.EXIT)
-                break;
-            ExecuteCommand.executeCommand(request.getCommandType());
+            if(Connection.getInstance().getRemoteAdd()!=null) {
+                ExecuteCommand.executeCommand(request.getCommandType());
+                Answer.send();
+            }
+
+            if (reader.ready()){
+                if (reader.readLine().equals("exit"))
+                    break;
+            }
         }
+        //JsonFile.getJsonFile().writeJSON();
+
     }
 }

@@ -14,9 +14,8 @@ public enum CommandType implements Serializable {
     REMOVE_BY_ID,
     REMOVE_LOWER,
     FILTER_BY_PRICE,
-    FILTER_LESS_BY_TYPE,
+    FILTER_LESS_THAN_TYPE,
     PRINT_ASCENDING,
-    UPDATE,
-    EXIT;
+    UPDATE;
     private static final long serialVersionUID = 12L;
 }

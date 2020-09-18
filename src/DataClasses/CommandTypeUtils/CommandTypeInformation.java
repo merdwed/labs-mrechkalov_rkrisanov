@@ -1,18 +1,18 @@
 package DataClasses.CommandTypeUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import DataClasses.Ticket;
 import DataClasses.TicketType;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CommandTypeInformation {
     private static java.util.Map<String, CommandType> existingCommands=new java.util.HashMap<String,  CommandType>();
     private static java.util.Map<CommandType, ArrayList<Class> > commandTypeParametersArray=new java.util.HashMap<CommandType, ArrayList<Class> >();
     private static java.util.Map<String,String> CommandTypeDocumentation=new java.util.HashMap<String,String>();
     static{
-        existingCommands.put("add",CommandType.ADD);  
-        commandTypeParametersArray.put(CommandType.ADD, new ArrayList<Class>(Arrays.asList(Ticket.class)));//да, это уродливая конструкция с рефлексией, оно выглядит страшно но работать будет  
+        existingCommands.put("add",CommandType.ADD);
+        commandTypeParametersArray.put(CommandType.ADD, new ArrayList<Class>(Arrays.asList(Ticket.class)));//да, это уродливая конструкция с рефлексией, оно выглядит страшно но работать будет
         CommandTypeDocumentation.put("add",
         "add\n"+
         "  {element}" + "\n" +
@@ -39,17 +39,17 @@ public class CommandTypeInformation {
 
 
         existingCommands.put("clear",CommandType.CLEAR );
-        commandTypeParametersArray.put(CommandType.CLEAR, new ArrayList<Class>(Arrays.asList(Ticket.class)));
+        commandTypeParametersArray.put(CommandType.CLEAR, null);
         CommandTypeDocumentation.put("clear",
         "clear" +
         "    Command removes all ticket from collection");
 
 
-        existingCommands.put("exit",CommandType.EXIT );
-        commandTypeParametersArray.put(CommandType.EXIT, null);
-        CommandTypeDocumentation.put("exit",
-        "exit" +
-        "    Command closes the program without saving");
+//        existingCommands.put("exit",CommandType.EXIT );
+//        commandTypeParametersArray.put(CommandType.EXIT, null);
+//        CommandTypeDocumentation.put("exit",
+//        "exit" +
+//        "    Command closes the program without saving");
         
 
         existingCommands.put("filter_by_price",CommandType.FILTER_BY_PRICE );
@@ -60,8 +60,8 @@ public class CommandTypeInformation {
         "    Command shows all tickets in collection with entered price");
 
 
-        existingCommands.put("filter_less_than_type",CommandType.FILTER_LESS_BY_TYPE);
-        commandTypeParametersArray.put(CommandType.FILTER_LESS_BY_TYPE, new ArrayList<Class>(Arrays.asList(TicketType.class)));
+        existingCommands.put("filter_less_than_type",CommandType.FILTER_LESS_THAN_TYPE);
+        commandTypeParametersArray.put(CommandType.FILTER_LESS_THAN_TYPE, new ArrayList<Class>(Arrays.asList(TicketType.class)));
         String tempString = "filter_less_than_type" + " <type>" + "\n" +
                 "    <type> - type of ticket ticket. Can be: ";
         for (TicketType tp : TicketType.values())

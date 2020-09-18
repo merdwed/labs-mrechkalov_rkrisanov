@@ -19,6 +19,9 @@ interface ServerCollectionInterface {
      */
     public void remove(Long id);
 
+
+    public boolean exist(Long id);
+
     /**
      * @return returned ArrayList of all items in collection
      */

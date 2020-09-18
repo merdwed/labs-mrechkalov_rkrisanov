@@ -22,6 +22,7 @@ public class Connection {
     {
         try {
             server = DatagramChannel.open();
+            server.configureBlocking(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +61,7 @@ public class Connection {
         return iAdd;
     }
 
-    protected SocketAddress getRemoteAdd() {
+    public SocketAddress getRemoteAdd() {
         return remoteAdd;
     }
 

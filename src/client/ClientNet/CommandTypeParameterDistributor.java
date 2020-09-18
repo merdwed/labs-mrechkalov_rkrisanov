@@ -1,22 +1,22 @@
 package client.ClientNet;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-
+import DataClasses.CommandTypeUtils.CommandType;
+import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import DataClasses.Ticket;
 import DataClasses.TicketType;
-import DataClasses.CommandTypeUtils.CommandType;//это должно быть в jar файле
-import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import client.ShellUtils.NoSourceException;
 import client.ShellUtils.ShellIO;
 import client.ShellUtils.ShellParser;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
 
 public class CommandTypeParameterDistributor {
     /**
      * method looks which parameters are needed for the command and fill in by using
      * pushParameter
-     * 
+     *
      * @see ParameterizedCommand#pushParameter(Object)
      * @see ParameterizedCommand#parameterClassIterator()
      * @param command just put your Command here

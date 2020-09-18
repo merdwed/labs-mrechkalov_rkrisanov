@@ -1,15 +1,12 @@
 package client.ShellUtils;
 
-import java.io.IOException;
-
 import DataClasses.CommandTypeUtils.CommandType;
 import client.ClientCommands.Command;
 import client.ClientCommands.CommandFactory;
 import client.ClientCommands.CommandParameterDistributor;
-import client.ClientNet.Answer;
-import client.ClientNet.CommandTypeFactory;
-import client.ClientNet.CommandTypeParameterDistributor;
-import client.ClientNet.PackageOut;
+import client.ClientNet.*;
+
+import java.io.IOException;
 
 /**
  * @author merdwed full static class, main loop for read and execute command.
@@ -37,16 +34,29 @@ public class ShellInterpretator {
                 stringCommand = ShellIO.readString(">");
                 if (stringCommand == null || stringCommand.isEmpty())
                     continue;
+                PackageOut.getInstance().remake();//Я вынужден поместить его здесь, перед parseStringServeCommand
                 CommandType commandType=parseStringServerCommand(stringCommand);
                 if(commandType==null){//если это не серверная команда
                     Command command = parseStringCommand(stringCommand);//пробовать выполнить клиентскую
                     command.execute();
                 }
-                else{//если это серверная команда
-                    PackageOut.getInstance().remake();//выполняем запрос пакета на серв
-                    PackageOut.getInstance().getObjectOutputStream().writeObject(commandType);
-                    Answer.send();
+                else {//если это серверная команда
 
+                    Answer.send();
+//                    if (commandType==CommandType.SHOW){
+//                        Request request = new Request();
+//                        ArrayList hyy = (ArrayList)PackageIn.getInstance().getObjectInputStream().readObject();
+//                        System.out.println(hyy.toString());
+//                    }
+//                    else if(commandType==CommandType.UPDATE){
+//                        PackageIn.getInstance().setBufferIn(PackageOut.getInstance().getBufferOut());
+//                        Object object = PackageIn.getInstance().getObjectInputStream().readObject();
+//                        System.out.println(object.getClass());
+//                        object = PackageIn.getInstance().getObjectInputStream().readObject();
+//                        System.out.println(object.getClass());
+//                    }
+                    Request request = new Request();
+                    CommandTypeFactory.processCommand(commandType);//CommandTypeFactory.prepareCommand(commandType)
                     //ВОТ ТУТ НАДО ВСТАВИТЬ КОД КОТОРЫЙ БУДЕТ ЖДАТЬ СООБЩЕНИЯ ИЗ СЕРВЕРА
 
                 }
@@ -89,6 +99,7 @@ public class ShellInterpretator {
              tempCommand= CommandTypeFactory.getCommandType(cav[0]);
         if(tempCommand == null)
         return null;
+        PackageOut.getInstance().getObjectOutputStream().writeObject(tempCommand);//Первым в потоке должен быть тип команды
         if(cav.length>1) {
             CommandTypeParameterDistributor.fillIn(tempCommand, cav[1]);
         }
