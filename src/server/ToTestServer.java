@@ -12,7 +12,6 @@ import java.nio.channels.DatagramChannel;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-
 public class ToTestServer {
 
     public static void main(String[] args) throws IOException, InterruptedException {

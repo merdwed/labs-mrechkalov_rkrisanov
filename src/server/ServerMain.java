@@ -8,15 +8,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class ServerMain {
     private final static int PORT = 8989;
     private final static String HOST_NAME = "localhost";
+    private static final Logger serverLogger = LogManager.getLogger(ServerMain.class);
     public static void main(String[] args) throws IOException {
 //        String fileName="NewCollection";
         String fileName="dataset example/dataset1";
         JsonFile.getJsonFile().setPathName(fileName);
         JsonFile.getJsonFile().readJSON();
+        serverLogger.info(fileName);
 //        if(args.length>0) {
 //            fileName=args[0];
 //            JsonFile.getJsonFile().setPathName(fileName);
@@ -35,6 +40,7 @@ public class ServerMain {
         while(true) {
             Request request = new Request();
             if(Connection.getInstance().getRemoteAdd()!=null) {
+                serverLogger.info(Connection.getInstance().getRemoteAdd());
                 ExecuteCommand.executeCommand(request.getCommandType());
                 Answer.send();
             }
@@ -44,7 +50,7 @@ public class ServerMain {
                     break;
             }
         }
-        //JsonFile.getJsonFile().writeJSON();
+        JsonFile.getJsonFile().writeJSON();
 
     }
 }
