@@ -1,5 +1,7 @@
-package client;
+import client.ClientNet.Connection;
+
 import java.io.IOException;
+import java.net.InetSocketAddress;
 
 public class ClientMain {
     public static void main(String[] args) throws IOException {

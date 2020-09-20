@@ -1,8 +1,10 @@
 package server.ServerNet;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.nio.channels.DatagramChannel;
 
 public class Connection {

@@ -6,7 +6,9 @@ import client.ClientCommands.CommandFactory;
 import client.ClientCommands.CommandParameterDistributor;
 import client.ClientNet.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author merdwed full static class, main loop for read and execute command.
@@ -41,22 +43,27 @@ public class ShellInterpretator {
                     command.execute();
                 }
                 else {//если это серверная команда
-
-                    Answer.send();
-//                    if (commandType==CommandType.SHOW){
-//                        Request request = new Request();
-//                        ArrayList hyy = (ArrayList)PackageIn.getInstance().getObjectInputStream().readObject();
-//                        System.out.println(hyy.toString());
-//                    }
-//                    else if(commandType==CommandType.UPDATE){
-//                        PackageIn.getInstance().setBufferIn(PackageOut.getInstance().getBufferOut());
-//                        Object object = PackageIn.getInstance().getObjectInputStream().readObject();
-//                        System.out.println(object.getClass());
-//                        object = PackageIn.getInstance().getObjectInputStream().readObject();
-//                        System.out.println(object.getClass());
-//                    }
-                    Request request = new Request();
-                    CommandTypeFactory.processCommand(commandType);//CommandTypeFactory.prepareCommand(commandType)
+                    long timeout;
+                    boolean received;
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    do {
+                        Answer.send();
+                        timeout = System.currentTimeMillis();
+                        received=false;
+                        while (!received) {
+                            received = Request.getInstance().receive();
+                            if (System.currentTimeMillis() - timeout > 1000)
+                                break;
+                        }
+                        if (!received) {
+                            System.out.println("Server is not available");
+                            System.out.print("Send again?(y/n)\n>");
+                        }
+                        } while((!received || reader.ready()) && reader.readLine().equals("y"));
+                    if (received) {
+                        Request.getInstance().prossessing();
+                        CommandTypeFactory.processCommand(commandType);//CommandTypeFactory.prepareCommand(commandType)
+                    }
                     //ВОТ ТУТ НАДО ВСТАВИТЬ КОД КОТОРЫЙ БУДЕТ ЖДАТЬ СООБЩЕНИЯ ИЗ СЕРВЕРА
 
                 }

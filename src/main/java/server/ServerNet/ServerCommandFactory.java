@@ -5,7 +5,7 @@ import DataClasses.ServerCommands.*;
 
 import java.io.IOException;
 
-public class ExecuteCommand  {
+public class ServerCommandFactory  {
     public static void executeCommand(CommandType commandType) throws IOException {
         server.ServerNet.PackageOut.getInstance().remake();
         switch (commandType){

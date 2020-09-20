@@ -14,13 +14,14 @@ public class Connection {
     public static Connection getInstance(){ return connection;}
 
     private int PORT = 8989;
-    private String hostname = "localhost";
+    private String hostname = "helios";//"localhost";
     private DatagramChannel client;
-    private InetSocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
+    private SocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
 
     {
         try {
             client = DatagramChannel.open();
+            client.configureBlocking(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +60,7 @@ public class Connection {
         return serverAddress;
     }
 
-    private void setServerAddress(SocketAddress remoteAdd) {
+    public void setServerAddress(InetSocketAddress serverAddress) {
         this.serverAddress = serverAddress;
     }
 }
