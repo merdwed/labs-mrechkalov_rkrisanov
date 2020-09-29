@@ -1,4 +1,4 @@
-import server.JsonFile;
+
 import server.ServerNet.Answer;
 import server.ServerNet.Connection;
 import server.ServerNet.ServerCommandFactory;
@@ -17,15 +17,7 @@ import org.apache.logging.log4j.Logger;
 public class ServerMain {
     public static void main(String[] args) throws IOException {
         Logger connectionLogger = LogManager.getLogger();
-        String fileName="Jsonfiles/dataset1";
-        if(new File(fileName).exists()){
-            JsonFile.getJsonFile().setPathName(fileName);
-            JsonFile.getJsonFile().readJSON();
-        }
-        else
-        {
-            JsonFile.getJsonFile().setPathName(fileName);
-        }
+
         Connection.getInstance().setiAdd(new InetSocketAddress(InetAddress.getLocalHost().getHostName(),8989));
         Connection.getInstance().rebind();
         connectionLogger.info("Server started, the host named "+Connection.getInstance().getiAdd().getHostName());
@@ -58,10 +50,6 @@ public class ServerMain {
                 }
             }
         }
-        fileName="Jsonfiles/dataset3";
-        if(new File(fileName).exists()) {
-            JsonFile.getJsonFile().setPathName(fileName);
-            JsonFile.getJsonFile().writeJSON();
-        }
+
     }
 }
