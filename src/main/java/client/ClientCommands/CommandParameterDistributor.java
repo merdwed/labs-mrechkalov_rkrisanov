@@ -22,7 +22,7 @@ public class CommandParameterDistributor {
     public static void fillIn(Command command, String vararg)throws NoSourceException{
         if(command instanceof ParameterizedCommand) {
             Iterator<String> stringIterator;
-            if (vararg != null)
+            if (vararg != null && vararg.isEmpty()==false)
                 stringIterator = Arrays.asList(vararg.split(" ")).iterator();
             else
                 stringIterator = null;

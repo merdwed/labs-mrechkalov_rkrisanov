@@ -1,10 +1,8 @@
 package server.ServerNet;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.net.UnknownHostException;
 import java.nio.channels.DatagramChannel;
 
 public class Connection {
@@ -15,7 +13,7 @@ public class Connection {
     public static Connection getInstance(){ return connection;}
 
     private int PORT = 8989;
-    private String hostname = "localhost";
+    private String hostname = "127.0.0.1";
     private DatagramChannel server;
     private InetSocketAddress iAdd = new InetSocketAddress(hostname, PORT);
 

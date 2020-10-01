@@ -1,11 +1,9 @@
-import server.JsonFile;
 import server.ServerNet.Answer;
 import server.ServerNet.Connection;
 import server.ServerNet.ServerCommandFactory;
 import server.ServerNet.Request;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -16,21 +14,20 @@ import org.apache.logging.log4j.Logger;
 
 public class ServerMain {
     public static void main(String[] args) throws IOException {
-        Logger connectionLogger = LogManager.getLogger();
-        String fileName="Jsonfiles/dataset1";
-        if(new File(fileName).exists()){
-            JsonFile.getJsonFile().setPathName(fileName);
-            JsonFile.getJsonFile().readJSON();
-        }
-        else
-        {
-            JsonFile.getJsonFile().setPathName(fileName);
-        }
-        Connection.getInstance().setiAdd(new InetSocketAddress(InetAddress.getLocalHost().getHostName(),8989));
-        Connection.getInstance().rebind();
-        connectionLogger.info("Server started, the host named "+Connection.getInstance().getiAdd().getHostName());
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        Logger connectionLogger = LogManager.getLogger();
+        System.out.println("server ready to start");
+        System.out.print("enter a listening host:");
+        String host = reader.readLine();
+        System.out.print("enter a listening port:");
+        Integer port = Integer.valueOf(reader.readLine());
+    
+        //Connection.getInstance().setiAdd(new InetSocketAddress(InetAddress.getLocalHost().getHostName(),8989));
+        Connection.getInstance().setiAdd(new InetSocketAddress(host,port));
+        Connection.getInstance().rebind();
+        connectionLogger.info("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
+        System.out.println("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
+        
         while(true) {
             if (Request.getInstance().receive()) {
                 connectionLogger.info("Request received from " + Connection.getInstance().getRemoteAdd());
@@ -57,11 +54,6 @@ public class ServerMain {
                     }
                 }
             }
-        }
-        fileName="Jsonfiles/dataset3";
-        if(new File(fileName).exists()) {
-            JsonFile.getJsonFile().setPathName(fileName);
-            JsonFile.getJsonFile().writeJSON();
         }
     }
 }

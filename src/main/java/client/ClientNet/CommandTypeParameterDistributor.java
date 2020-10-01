@@ -30,7 +30,7 @@ public class CommandTypeParameterDistributor {
                 if(CommandTypeInformation.NeededParametersOfCommndType(commandType)==null)
                     return;
                 Iterator<Class> parameterIterator=CommandTypeInformation.NeededParametersOfCommndType(commandType).iterator();
-                if(vararg != null)
+                if(vararg != null && vararg.isEmpty()==false)
                     stringIterator = Arrays.asList(vararg.split(" ")).iterator();
                 else
                     stringIterator = null;

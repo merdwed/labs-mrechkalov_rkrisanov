@@ -14,7 +14,7 @@ public class Connection {
     public static Connection getInstance(){ return connection;}
 
     private int PORT = 8989;
-    private String hostname = "HpMain";//"localhost";
+    private String hostname = "127.0.0.1";//"localhost";
     private DatagramChannel client;
     private SocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
 

@@ -9,6 +9,7 @@ import client.ClientNet.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * @author merdwed full static class, main loop for read and execute command.
@@ -40,9 +41,11 @@ public class ShellInterpretator {
                 CommandType commandType=parseStringServerCommand(stringCommand);
                 if(commandType==null){//если это не серверная команда
                     Command command = parseStringCommand(stringCommand);//пробовать выполнить клиентскую
+                    formClientCommandArg(command,Arrays.stream( stringCommand.split(" ",2)).skip(1).reduce("", String::concat));// в stream отбрасываеся первая часть
                     command.execute();
                 }
                 else {//если это серверная команда
+                    formThePackageOut(commandType,Arrays.stream( stringCommand.split(" ",2)).skip(1).reduce("", String::concat));// в stream отбрасываеся первая часть
                     long timeout;
                     boolean received;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -85,36 +88,26 @@ public class ShellInterpretator {
      * @see CommandParameterDistributor
      * @see Command
      */
-    private static Command parseStringCommand(String stringCommand) throws NoSourceException {
+    private static Command parseStringCommand(String stringCommand){
         String[] cav = stringCommand.split(" ", 2);
-        Command tempCommand = null;
         if (cav.length > 0)
-            tempCommand = CommandFactory.createNewCommand(cav[0]);
-        if (cav.length > 1) {
-            CommandParameterDistributor.fillIn(tempCommand, cav[1]);
-        } else {
-            CommandParameterDistributor.fillIn(tempCommand, null);
-        }
-        return tempCommand;
-
-    }
-
-    private static CommandType parseStringServerCommand(String stringCommand) throws NoSourceException, IOException {
-        String[] cav=stringCommand.split(" ",2);
-        CommandType tempCommand=null;
-        if(cav.length>0)
-             tempCommand= CommandTypeFactory.getCommandType(cav[0]);
-        if(tempCommand == null)
+            return  CommandFactory.createNewCommand(cav[0]);
         return null;
-        PackageOut.getInstance().getObjectOutputStream().writeObject(tempCommand);//Первым в потоке должен быть тип команды
-        if(cav.length>1) {
-            CommandTypeParameterDistributor.fillIn(tempCommand, cav[1]);
-        }
-        else{
-            CommandTypeParameterDistributor.fillIn(tempCommand,null);
-        }
-        return tempCommand;
-    }
 
+    }
+    private static void formClientCommandArg(Command command, String vararg) throws NoSourceException {
+        CommandParameterDistributor.fillIn(command, vararg);
+    }
+    private static CommandType parseStringServerCommand(String stringCommand) {
+        String[] cav=stringCommand.split(" ",2);
+        if(cav.length>0)
+             return CommandTypeFactory.getCommandType(cav[0]);        
+        return null;
+    }
+    private static void formThePackageOut(CommandType command, String vararg)throws NoSourceException, IOException {
+        PackageOut.getInstance().getObjectOutputStream().writeObject(command);//Первым в потоке должен быть тип команды
+        CommandTypeParameterDistributor.fillIn(command, vararg);
+
+    }
 
 }

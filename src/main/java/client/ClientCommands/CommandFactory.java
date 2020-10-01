@@ -14,7 +14,6 @@ public class CommandFactory {
     static{
         existingCommands.put("execute_script", ExecuteScriptCommand.class);
         existingCommands.put("exit",ExitCommand.class);
-        existingCommands.put("print_ascending",PrintAscendingCommand.class);
         existingCommands.put("help",HelpCommand.class);
     }
 
