@@ -9,13 +9,5 @@ public class ClearCommand extends Command {
         ServerMediator.getInstance().getArrayListCollection().forEach(element -> ServerMediator.getInstance().remove(element.getId()));
         server.ServerNet.PackageOut.getInstance().getObjectOutputStream().writeObject("Collection is cleaned up");
 }
-    public static void process() throws IOException {
-        try {
-            String message =(String) client.ClientNet.PackageIn.getInstance().getObjectInputStream().readObject();
-            System.out.println(message);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Произошла ошибка при попытке десериализовать сообщение");
-        }
-    }
+   
 }

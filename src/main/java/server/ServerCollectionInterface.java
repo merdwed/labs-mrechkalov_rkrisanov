@@ -36,4 +36,5 @@ interface ServerCollectionInterface {
      * @return String-format common information about current collection
      */
     public String getInfo();
+
 }

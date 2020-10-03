@@ -22,20 +22,5 @@ public class FilterLessThanTypeCommand extends Command {
         }
     }
 
-    public static void process() throws IOException {
-        try {
-            String message = (String) client.ClientNet.PackageIn.getInstance().getObjectInputStream().readObject();
-            if (!message.equals(new WrongTicketTypeException().toString())) {
-                System.out.println(message);
-                java.util.ArrayList arr = (java.util.ArrayList) client.ClientNet.PackageIn.getInstance().getObjectInputStream().readObject();
-                System.out.println(arr.toString());
-            }
-            else{
-                System.out.println(message);
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Произошла ошибка при попытке десериализовать сообщение");
-        }
-    }
+   
 }

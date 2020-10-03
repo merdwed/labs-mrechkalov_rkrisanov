@@ -1,6 +1,8 @@
 package client.ShellUtils;
 
 import DataClasses.CommandTypeUtils.CommandType;
+import DataClasses.CommandTypeUtils.CommandTypeFactory;
+import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import client.ClientCommands.Command;
 import client.ClientCommands.CommandFactory;
 import client.ClientCommands.CommandParameterDistributor;
@@ -22,6 +24,7 @@ import java.util.Arrays;
  */
 public class ShellInterpretator {
 
+
     /**
      * main loop. method calls parseStringCommand on every command line and executes
      * received Command
@@ -32,20 +35,26 @@ public class ShellInterpretator {
     public static void run() {
 
         String stringCommand;
+        String commandName;
+        String vararg;
         while (true) {
             try {
                 stringCommand = ShellIO.readString(">");
                 if (stringCommand == null || stringCommand.isEmpty())
                     continue;
+                commandName=stringCommand.split(" ",2)[0];//первая часть - сама команда
+                vararg =Arrays.stream( stringCommand.split(" ",2)).skip(1).reduce("", String::concat);// в stream отбрасываеся первая часть
+                
                 PackageOut.getInstance().remake();//Я вынужден поместить его здесь, перед parseStringServeCommand
-                CommandType commandType=parseStringServerCommand(stringCommand);
-                if(commandType==null){//если это не серверная команда
-                    Command command = parseStringCommand(stringCommand);//пробовать выполнить клиентскую
-                    formClientCommandArg(command,Arrays.stream( stringCommand.split(" ",2)).skip(1).reduce("", String::concat));// в stream отбрасываеся первая часть
+                CommandType commandType=parseStringServerCommand(commandName);
+                if(commandType==null){//если клиентская команда
+                    Command command = parseStringCommand(commandName);//пробовать найти клиентскую
+                    formClientCommandArg(command,vararg);// в stream отбрасываеся первая часть
                     command.execute();
                 }
-                else {//если это серверная команда
-                    formThePackageOut(commandType,Arrays.stream( stringCommand.split(" ",2)).skip(1).reduce("", String::concat));// в stream отбрасываеся первая часть
+                else{//если это серверная команда
+                    
+                    formThePackageOut(commandType,commandName,vararg);// в stream отбрасываеся первая часть
                     long timeout;
                     boolean received;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -65,7 +74,7 @@ public class ShellInterpretator {
                         } while((!received || reader.ready()) && reader.readLine().equals("y"));
                     if (received) {
                         Request.getInstance().prossessing();
-                        CommandTypeFactory.processCommand(commandType);//CommandTypeFactory.prepareCommand(commandType)
+                        CommandTypeResponseDecoder.decode(CommandTypeInformation.ResponsedParametersOfCommndType(commandName));
                     }
                     //ВОТ ТУТ НАДО ВСТАВИТЬ КОД КОТОРЫЙ БУДЕТ ЖДАТЬ СООБЩЕНИЯ ИЗ СЕРВЕРА
 
@@ -104,9 +113,9 @@ public class ShellInterpretator {
              return CommandTypeFactory.getCommandType(cav[0]);        
         return null;
     }
-    private static void formThePackageOut(CommandType command, String vararg)throws NoSourceException, IOException {
+    private static void formThePackageOut(CommandType command, String commandName, String vararg)throws NoSourceException, IOException {
         PackageOut.getInstance().getObjectOutputStream().writeObject(command);//Первым в потоке должен быть тип команды
-        CommandTypeParameterDistributor.fillIn(command, vararg);
+        CommandTypeParameterDistributor.fillIn(commandName, vararg);
 
     }
 

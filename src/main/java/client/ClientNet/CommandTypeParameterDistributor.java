@@ -1,6 +1,5 @@
 package client.ClientNet;
 
-import DataClasses.CommandTypeUtils.CommandType;
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import DataClasses.Ticket;
 import DataClasses.TicketType;
@@ -19,17 +18,17 @@ public class CommandTypeParameterDistributor {
      *
      * @see ParameterizedCommand#pushParameter(Object)
      * @see ParameterizedCommand#parameterClassIterator()
-     * @param command just put your Command here
+     * @param commandName just put your Command here
      * @param vararg  input string after name of command in console
      * @throws IOException
      * @throws NoSourceException
      */
-    public static void fillIn(CommandType commandType, String vararg) throws IOException, NoSourceException {
+    public static void fillIn(String commandName, String vararg) throws IOException, NoSourceException {
 
                 Iterator<String> stringIterator;
-                if(CommandTypeInformation.NeededParametersOfCommndType(commandType)==null)
+                if(CommandTypeInformation.NeededParametersOfCommndType(commandName)==null)
                     return;
-                Iterator<Class> parameterIterator=CommandTypeInformation.NeededParametersOfCommndType(commandType).iterator();
+                Iterator<Class> parameterIterator=CommandTypeInformation.NeededParametersOfCommndType(commandName).iterator();
                 if(vararg != null && vararg.isEmpty()==false)
                     stringIterator = Arrays.asList(vararg.split(" ")).iterator();
                 else
