@@ -1,9 +1,6 @@
 package DataClasses.CommandTypeUtils;
 
 import DataClasses.TicketType;
-import DataClasses.ServerCommands.*;//Ну и это, раз такое дело пошло
-
-import java.io.IOException;
 
 public class CommandTypeFactory {
     private static java.util.Map<String, CommandType> existingCommands=new java.util.HashMap<String,  CommandType>();
