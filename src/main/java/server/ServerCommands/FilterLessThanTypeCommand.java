@@ -1,4 +1,4 @@
-package DataClasses.ServerCommands;
+package server.ServerCommands;
 
 import DataClasses.Exception.WrongTicketTypeException;
 import DataClasses.TicketType;

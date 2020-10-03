@@ -1,9 +1,9 @@
 package server.ServerNet;
 
-import DataClasses.CommandTypeUtils.CommandType;
-import DataClasses.ServerCommands.*;
-
 import java.io.IOException;
+
+import DataClasses.CommandTypeUtils.CommandType;
+import server.ServerCommands.*;
 
 public class ServerCommandFactory  {
     public static void executeCommand(CommandType commandType) throws IOException {

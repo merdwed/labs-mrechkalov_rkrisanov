@@ -11,7 +11,6 @@
     <properties>
         <logstash.host>logstashcsm.example.ru</logstash.host>
     </properties>
-
     <build>
         <pluginManagement>
             <plugins>
@@ -116,6 +115,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>proglab.DataClasses</groupId>
+            <artifactId>DataClasses</artifactId>
+            <version>1.0</version>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

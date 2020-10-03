@@ -1,4 +1,4 @@
-package DataClasses.ServerCommands;
+package server.ServerCommands;
 
 public interface Execute {
     static void execute() {

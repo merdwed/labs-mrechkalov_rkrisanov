@@ -1,4 +1,4 @@
-package DataClasses.ServerCommands;
+package server.ServerCommands;
 
 import DataClasses.Ticket;
 import server.ServerMediator;
