@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author Drukharion
  */
 public class Ticket implements Serializable {
-    public Ticket(TicketType type,Double price, String name,Coordinates coordinates,Person person, Account creator){
+    public Ticket(TicketType type,Double price, String name,Coordinates coordinates,Person person, String creator){
         this.type = type;
         this.price=price;
         this.name = name;
@@ -27,11 +27,11 @@ public class Ticket implements Serializable {
     private Double price; //Поле не может быть null, Значение поля должно быть больше 0
     private TicketType type; //Поле может быть null
     private Person person=new Person();// = new Person(); //Поле может быть null
-    private Account creator;
-    public void setCreator(Account creator){
+    private String creator;
+    public void setCreator(String creator){
         this.creator=creator;
     }
-    public Account getCreator(){
+    public String getCreator(){
         return creator;
     }
     public void setPerson(Person p){
