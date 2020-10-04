@@ -1,5 +1,6 @@
 package client.ShellUtils;
 
+import DataClasses.Account;
 import DataClasses.CommandTypeUtils.CommandType;
 import DataClasses.CommandTypeUtils.CommandTypeFactory;
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
@@ -11,6 +12,7 @@ import client.ClientNet.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -32,6 +34,10 @@ public class ShellInterpretator {
      * @see ShellInterpretator#parseStringCommand(String)
      * @see Command
      */
+    private static Account currentAccount=null;
+    public static void setCurrentAccount(Account acc){
+        currentAccount=acc;
+    }
     public static void run() {
 
         String stringCommand;
@@ -53,7 +59,10 @@ public class ShellInterpretator {
                     command.execute();
                 }
                 else{//если это серверная команда
-                    
+                    if(currentAccount==null){
+                        System.out.println("you can't use server commands without signing in account. use sign_in");
+                        continue;
+                    }
                     formThePackageOut(commandType,commandName,vararg);// в stream отбрасываеся первая часть
                     long timeout;
                     boolean received;
@@ -74,7 +83,8 @@ public class ShellInterpretator {
                         } while((!received || reader.ready()) && reader.readLine().equals("y"));
                     if (received) {
                         Request.getInstance().prossessing();
-                        CommandTypeResponseDecoder.decode(CommandTypeInformation.ResponsedParametersOfCommndType(commandName));
+                        ArrayList<Object> arr=CommandTypeResponseDecoder.decode(CommandTypeInformation.ResponsedParametersOfCommndType(commandName));
+                        arr.stream().forEach(System.out::println);
                     }
                     //ВОТ ТУТ НАДО ВСТАВИТЬ КОД КОТОРЫЙ БУДЕТ ЖДАТЬ СООБЩЕНИЯ ИЗ СЕРВЕРА
 
@@ -114,8 +124,9 @@ public class ShellInterpretator {
         return null;
     }
     private static void formThePackageOut(CommandType command, String commandName, String vararg)throws NoSourceException, IOException {
+        //PackageOut.getInstance().getObjectOutputStream().writeObject(currentAccount);//нулевым в поток должен идти аккаунт
         PackageOut.getInstance().getObjectOutputStream().writeObject(command);//Первым в потоке должен быть тип команды
-        CommandTypeParameterDistributor.fillIn(commandName, vararg);
+        CommandTypeParameterDistributor.fillIn(commandName, vararg);//дальше идут параметры
 
     }
 

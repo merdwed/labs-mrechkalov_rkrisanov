@@ -116,7 +116,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>proglab.DataClasses</groupId>
+            <groupId>lab7</groupId>
             <artifactId>DataClasses</artifactId>
             <version>1.0</version>
         </dependency>

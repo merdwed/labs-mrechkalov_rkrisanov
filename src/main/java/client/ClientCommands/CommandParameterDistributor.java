@@ -1,6 +1,7 @@
 package client.ClientCommands;
 import DataClasses.TicketType;
 import DataClasses.Ticket;
+import DataClasses.Account;
 import client.ShellUtils.ShellParser;
 import client.ShellUtils.ShellIO;
 import client.ShellUtils.NoSourceException;
@@ -73,7 +74,10 @@ public class CommandParameterDistributor {
                         }
                         continue;
                     }
-
+                    if (currentParameterType == Account.class) {
+                        ((ParameterizedCommand) command).pushParameter(ShellIO.readAccount());
+                        continue;
+                    }
 
                 }
                 catch(IllegalArgumentException e){

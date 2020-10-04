@@ -2,7 +2,7 @@ package client.ShellUtils;
 
 import DataClasses.Ticket;
 import DataClasses.TicketType;
-
+import DataClasses.Account;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -253,5 +253,16 @@ public class ShellIO {
         finally{
             printMessageIfConsole("end of reading ticket\n");//Дикий костыль, мне было лень вставлять эту строку перед каждым return
         }
+    }
+    public static Account readAccount()throws NoSourceException {
+        String tempUser=null;
+        String tempPassword=null;
+        do {
+            tempUser = readString("  enter the user:");
+            if (tempUser == null || tempUser.equals("")) return null;
+        } while (tempUser == null);
+        
+        tempPassword = readString("  enter the password:");
+        return new Account(tempUser,tempPassword);
     }
 }

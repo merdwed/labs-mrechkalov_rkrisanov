@@ -15,6 +15,8 @@ public class CommandFactory {
         existingCommands.put("execute_script", ExecuteScriptCommand.class);
         existingCommands.put("exit",ExitCommand.class);
         existingCommands.put("help",HelpCommand.class);
+        existingCommands.put("sign_in",SignInCommand.class);
+        existingCommands.put("sign_out",SignOutCommand.class);
     }
 
     /**
