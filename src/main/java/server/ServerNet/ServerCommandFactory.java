@@ -21,6 +21,7 @@ public class ServerCommandFactory  {
             case FILTER_LESS_THAN_TYPE:{FilterLessThanTypeCommand.execute();break;}
             case PRINT_ASCENDING:{PrintAscendingCommand.execute();break;}
             case UPDATE:{UpdateCommand.execute();break;}
+            case CREATE_ACCOUNT:{CreateAccountCommand.execute();break;}
             default:
                 System.out.println("Команда не найдена");
         }

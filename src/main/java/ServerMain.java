@@ -1,13 +1,16 @@
-import server.ServerNet.Answer;
-import server.ServerNet.Connection;
-import server.ServerNet.ServerCommandFactory;
-import server.ServerNet.Request;
+import DataClasses.*;
+import DataClasses.CommandTypeUtils.CommandType;
+import server.DataBase.DataBase;
+import server.DataBase.DataBaseCommand;
+import server.Dataset;
+import server.ServerNet.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.sql.SQLException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,22 +24,38 @@ public class ServerMain {
         String host = reader.readLine();
         System.out.print("enter a listening port:");
         Integer port = Integer.valueOf(reader.readLine());
-    
-        //Connection.getInstance().setiAdd(new InetSocketAddress(InetAddress.getLocalHost().getHostName(),8989));
+
         Connection.getInstance().setiAdd(new InetSocketAddress(host,port));
         Connection.getInstance().rebind();
         connectionLogger.info("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
         System.out.println("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
-        
+        DataBase.getInstance().Connect();
+        DataBaseCommand.setStatement(DataBase.getStatement());
+        try {
+            DataBaseCommand.getTicketCollection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         while(true) {
             if (Request.getInstance().receive()) {
                 connectionLogger.info("Request received from " + Connection.getInstance().getRemoteAdd());
-                Request.getInstance().prossessing();
+                Request.getInstance().prossesAccount();
+                connectionLogger.info("Request received from user: "+Request.getInstance().getAccount().getLogin());
+                Request.getInstance().prossesCommand();
                 connectionLogger.info("Request contains command " + Request.getInstance().getCommandType());
-                ServerCommandFactory.executeCommand(Request.getInstance().getCommandType());
-                connectionLogger.info("Command " + Request.getInstance().getCommandType() + " executed");
-                Answer.send();
-                connectionLogger.info("Answer sent to " + Connection.getInstance().getRemoteAdd());
+                if (DataBase.getInstance().checkAccount(Request.getInstance().getAccount())||Request.getInstance().getCommandType().equals(CommandType.CREATE_ACCOUNT)) {
+                    connectionLogger.info("Request contains command " + Request.getInstance().getCommandType());
+                    ServerCommandFactory.executeCommand(Request.getInstance().getCommandType());
+                    connectionLogger.info("Command " + Request.getInstance().getCommandType() + " executed");
+                    Answer.send();
+                    connectionLogger.info("Answer sent to " + Connection.getInstance().getRemoteAdd());
+                }
+                else
+                {
+                    PackageOut.getInstance().remake();//надо убрать куда-нить
+                    PackageOut.getInstance().getObjectOutputStream().writeObject("Account not found, use create_account");
+                    Answer.send();
+                }
             }
 
             if (reader.ready()) {
@@ -48,11 +67,19 @@ public class ServerMain {
                         System.out.println(InetAddress.getLocalHost().getHostName());
                         break;
                     }
-                    case "get_free_port": {
-                        System.out.println(InetAddress.getLocalHost());
+                    case "get_collection":{
+                        for (Ticket ticket :
+                                Dataset.getCurrentInstance().getArrayListCollection()) {
+                            System.out.print(ticket);
+                        }
+                        break;
+                    }
+                    case "delete_user":{
+                        System.out.println();
                         break;
                     }
                 }
+                System.out.print(">");
             }
         }
     }
