@@ -31,6 +31,7 @@ public class DataBaseCommand {
         statement.execute(request);
     }
     public static void AddTicket(Ticket ticket) throws SQLException {
+        if (ticket==null) return;
         String request = "INSERT INTO Ticket (id,name,coordinates,type,price,person,creater)" +
                 "VALUES(nextval('bigserial'),";
         if (ticket.getName()==null) request+="NULL";

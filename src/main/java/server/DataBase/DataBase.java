@@ -23,8 +23,7 @@ public class DataBase {
             e.printStackTrace();
         }
     }
-    public boolean checkAccount(Account account) {
-        try {
+    public boolean checkAccount(Account account) throws SQLException{
             statement = connection.createStatement();
             ResultSet rs;
             rs= statement.executeQuery("SELECT username FROM users WHERE username = '"
@@ -33,12 +32,8 @@ public class DataBase {
             while (rs.next()) {
                 name = rs.getString(1);
             }
-            assert name != null;
+            if (name==null) return false;
             return (name.equals(account.getLogin()));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     public static void main(String[] argv) throws SQLException {
