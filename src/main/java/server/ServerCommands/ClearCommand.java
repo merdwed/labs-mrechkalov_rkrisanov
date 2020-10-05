@@ -1,12 +1,14 @@
 package server.ServerCommands;
 
 import server.ServerMediator;
+import server.ServerNet.Answer;
+import server.ServerNet.Request;
 
 import java.io.IOException;
 
 public class ClearCommand extends Command {
-    public static void execute() throws IOException {
+    public static void execute(Request request, Answer answer) throws IOException {
         ServerMediator.getInstance().getArrayListCollection().forEach(element -> ServerMediator.getInstance().remove(element.getId()));
-        server.ServerNet.PackageOut.getInstance().getObjectOutputStream().writeObject("Collection is cleaned up");
+        answer.setToCurrans("Collection is cleaned up");
     }
 }

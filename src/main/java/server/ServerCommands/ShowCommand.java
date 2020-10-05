@@ -2,14 +2,13 @@ package server.ServerCommands;
 
 import DataClasses.Comparators.NameComparator;
 import server.ServerMediator;
-import server.ServerNet.PackageOut;
-
-import java.io.IOException;
+import server.ServerNet.Answer;
+import server.ServerNet.Request;
 
 public class ShowCommand extends Command {
-    public static void execute() throws IOException {
-        PackageOut.getInstance().getObjectOutputStream().writeObject("Collection:");
-        PackageOut.getInstance().getObjectOutputStream().writeObject(ServerMediator.getInstance().getSortedArrayList(new NameComparator()));
+    public static void execute(Request request, Answer answer)  {
+        answer.setToCurrans("Collection:");
+        answer.setToCurrans(ServerMediator.getInstance().getSortedArrayList(new NameComparator()));
     }
 
 

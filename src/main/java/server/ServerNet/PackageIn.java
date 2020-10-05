@@ -4,8 +4,8 @@ import java.io.*;
 import java.nio.ByteBuffer;
 
 public class PackageIn {
-    private static PackageIn packageIn = new PackageIn();
-    public static PackageIn getInstance() { return packageIn; }
+    PackageIn(){
+    }
     private ObjectInputStream objectInputStream;
     private ByteArrayInputStream byteArrayInputStream;
 

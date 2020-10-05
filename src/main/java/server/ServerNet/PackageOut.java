@@ -6,8 +6,14 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 public class PackageOut {
-    private static PackageOut packageOut = new PackageOut();
-    public static PackageOut getInstance() { return packageOut; }
+    PackageOut(){
+        byteArrayOutputStream=new ByteArrayOutputStream();
+        try {
+            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private ByteArrayOutputStream byteArrayOutputStream;//=new ByteArrayOutputStream();
     private ObjectOutputStream objectOutputStream;
@@ -24,13 +30,5 @@ public class PackageOut {
         byteArrayOutputStream.close();
         objectOutputStream.flush();
         objectOutputStream.close();
-    }
-    public void remake(){
-        byteArrayOutputStream=new ByteArrayOutputStream();
-        try {
-            objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

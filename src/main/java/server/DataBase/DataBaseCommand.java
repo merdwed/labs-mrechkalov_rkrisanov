@@ -1,9 +1,8 @@
 package server.DataBase;
 
+import DataClasses.Account;
 import DataClasses.Ticket;
 import server.Dataset;
-import server.ServerNet.Request;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +10,7 @@ import java.sql.Statement;
 public class DataBaseCommand {
     private static Statement statement=null;
     private static ResultSet resultSet=null;
+    private static Account account = null;
     public static Long getCurrId()throws SQLException{
         resultSet = statement.executeQuery("SELECT currval('bigserial')");
         resultSet.next();
@@ -30,7 +30,7 @@ public class DataBaseCommand {
         String request = "DELETE FROM ticket WHERE id="+id+";";
         statement.execute(request);
     }
-    public static void AddTicket(Ticket ticket) throws SQLException {
+    public static void AddTicket(Ticket ticket,Account account) throws SQLException {
         if (ticket==null) return;
         String request = "INSERT INTO Ticket (id,name,coordinates,type,price,person,creater)" +
                 "VALUES(nextval('bigserial'),";
@@ -58,11 +58,10 @@ public class DataBaseCommand {
                     request+=")";
         }
         request+=",'";
-        request+=Request.getInstance().getAccount().getLogin()+"');";
-                System.out.println(request);
+        request+=account.getLogin()+"');";
         statement.execute(request);
     }
-    public static void UpdateTicket(Long id,Ticket ticket) throws SQLException {
+    public static void UpdateTicket(Long id, Ticket ticket,Account account) throws SQLException {
         RemoveTicket(id);
         String request = "INSERT INTO Ticket (id,name,coordinates,type,price,person,creater)" +
                 "VALUES("+id +
@@ -77,7 +76,7 @@ public class DataBaseCommand {
                 "," + ticket.getPersonLocationY()+
                 "," +ticket.getPersonLocationZ()+
                 ",'" +ticket.getPersonLocationName()+"')),"+
-                "'"+Request.getInstance().getAccount().getLogin()+"');";
+                "'"+account.getLogin()+"');";
         statement.execute(request);
     }
     public static void getTicketCollection() throws SQLException {
@@ -109,5 +108,9 @@ public class DataBaseCommand {
 
     public static void setStatement(Statement statement) {
         DataBaseCommand.statement = statement;
+    }
+
+    public static void setAccount(Account account) {
+        DataBaseCommand.account = account;
     }
 }

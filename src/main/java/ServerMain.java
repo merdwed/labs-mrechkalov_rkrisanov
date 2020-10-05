@@ -3,6 +3,7 @@ import DataClasses.CommandTypeUtils.CommandType;
 import server.DataBase.DataBase;
 import server.DataBase.DataBaseCommand;
 import server.Dataset;
+import server.ServerMediator;
 import server.ServerNet.*;
 
 import java.io.BufferedReader;
@@ -37,24 +38,33 @@ public class ServerMain {
             e.printStackTrace();
         }
         while(true) {
-            if (Request.getInstance().receive()) {
+            Request request = new Request();
+            if (request.receive()) {
                 connectionLogger.info("Request received from " + Connection.getInstance().getRemoteAdd());
-                Request.getInstance().prossesAccount();
-                connectionLogger.info("Request received from user: "+Request.getInstance().getAccount().getLogin());
-                Request.getInstance().prossesCommand();
-                connectionLogger.info("Request contains command " + Request.getInstance().getCommandType());
-                if (DataBase.getInstance().checkAccount(Request.getInstance().getAccount())||Request.getInstance().getCommandType().equals(CommandType.CREATE_ACCOUNT)) {
-                    connectionLogger.info("Request contains command " + Request.getInstance().getCommandType());
-                    ServerCommandFactory.executeCommand(Request.getInstance().getCommandType());
-                    connectionLogger.info("Command " + Request.getInstance().getCommandType() + " executed");
-                    Answer.send();
-                    connectionLogger.info("Answer sent to " + Connection.getInstance().getRemoteAdd());
-                }
-                else
-                {
-                    PackageOut.getInstance().remake();//надо убрать куда-нить
-                    PackageOut.getInstance().getObjectOutputStream().writeObject("Account not found, use create_account");
-                    Answer.send();
+                request.prossesAccount();
+                connectionLogger.info("Request received from user: "+request.getAccount().getLogin());
+                request.prossesCommand();
+                connectionLogger.info("Request contains command " + request.getCommandType());
+                request.prossesArg();
+                Answer answer = new Answer();
+                try {
+                    if (DataBase.getInstance().checkAccount(request.getAccount())||request.getCommandType().equals(CommandType.CREATE_ACCOUNT)) {
+                        connectionLogger.info("Request contains command " + request.getCommandType());
+
+                        ServerCommandFactory.executeCommand(request,answer);
+                        connectionLogger.info("Command " + request.getCommandType() + " executed");
+                        answer.prepare(request.getCommandType());
+                        answer.send();
+                        connectionLogger.info("Answer sent to " + Connection.getInstance().getRemoteAdd());
+                    }
+                    else
+                    {
+                        answer.setToCurrans("It's wrong");
+                        answer.prepare(request.getCommandType());
+                        answer.send();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
 
