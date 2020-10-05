@@ -1,5 +1,6 @@
 package DataClasses.CommandTypeUtils;
 
+import DataClasses.Account;
 import DataClasses.Ticket;
 import DataClasses.TicketType;
 
@@ -149,6 +150,16 @@ public class CommandTypeInformation {
             "    {element} - fields of element line by lie" +"\n" +
             "    Command replace ticket in collection by id",
             new ArrayList<Class>(Arrays.asList(Long.class, Ticket.class)),
+            new ArrayList<Class>(Arrays.asList(String.class))
+        ));
+        existingCommands.put(CommandType.CREATE_ACCOUNT,
+        new CommandTypeInformationObject(
+            "create_account", 
+            "create_account" + "\n" +
+                "  {account}" + "\n" +
+                "    {account} - fields of account line by line" +"\n" +
+                "    Command allows you to create your new account",
+            new ArrayList<Class>(Arrays.asList(Account.class)), 
             new ArrayList<Class>(Arrays.asList(String.class))
         ));
     }
