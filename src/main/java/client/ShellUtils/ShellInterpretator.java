@@ -2,7 +2,6 @@ package client.ShellUtils;
 
 import DataClasses.Account;
 import DataClasses.CommandTypeUtils.CommandType;
-import DataClasses.CommandTypeUtils.CommandTypeFactory;
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import client.ClientCommands.Command;
 import client.ClientCommands.CommandFactory;
@@ -120,7 +119,7 @@ public class ShellInterpretator {
     private static CommandType parseStringServerCommand(String stringCommand) {
         String[] cav=stringCommand.split(" ",2);
         if(cav.length>0)
-             return CommandTypeFactory.getCommandType(cav[0]);        
+             return CommandTypeInformation.commandTypeByCommandName(cav[0]);        
         return null;
     }
     private static void formThePackageOut(CommandType command, String commandName, String vararg)throws NoSourceException, IOException {
