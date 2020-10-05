@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author merdwed full static class, main loop for read and execute command.
@@ -87,7 +88,7 @@ public class ShellInterpretator {
                     if (received) {
                         Request.getInstance().prossessing();
                         ArrayList<Object> arr=CommandTypeResponseDecoder.decode(CommandTypeInformation.ResponsedParametersOfCommndType(commandName));
-                        arr.stream().forEach(System.out::println);
+                        arr.stream().filter(Objects::nonNull).forEach(System.out::println);
                     }
                     //ВОТ ТУТ НАДО ВСТАВИТЬ КОД КОТОРЫЙ БУДЕТ ЖДАТЬ СООБЩЕНИЯ ИЗ СЕРВЕРА
 

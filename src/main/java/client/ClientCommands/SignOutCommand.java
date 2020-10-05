@@ -25,7 +25,7 @@ public class SignOutCommand extends Command {
     @Override
     public String getDocumentation(){
         return  this.toString() + "\n" +
-                "    Command allows you to sgin out from your account";
+                "    Command allows you to sign out from your account";
     }
     @Override
     public String toString(){
