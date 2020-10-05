@@ -10,22 +10,22 @@ import java.util.stream.Stream;
 
 public class CommandTypeInformation {
     private static class CommandTypeInformationObject{
-        CommandTypeInformationObject(CommandType cType,String doc, ArrayList<Class> commandTypePC, ArrayList<Class> commandTypeRC){
-            commandType=cType;
+        CommandTypeInformationObject(String sName,String doc, ArrayList<Class> commandTypePC, ArrayList<Class> commandTypeRC){
+            commandName=sName;
             documentationString=doc;
             commandTypeParametersClasses=commandTypePC;
             commandTypeResponsedClasses=commandTypeRC;
         }
-        CommandType commandType;
+        String commandName;
         String documentationString;
         ArrayList<Class> commandTypeParametersClasses;
         ArrayList<Class> commandTypeResponsedClasses;
     }
-    private static java.util.Map<String, CommandTypeInformationObject> existingCommands = new java.util.HashMap<String,  CommandTypeInformationObject>();
+    private static java.util.Map<CommandType, CommandTypeInformationObject> existingCommands = new java.util.HashMap<CommandType,  CommandTypeInformationObject>();
     static{
-        existingCommands.put("add",
+        existingCommands.put(CommandType.ADD,
         new CommandTypeInformationObject(
-            CommandType.ADD,
+            "add",
             "add\n"+
             "  {element}" + "\n" +
             "    {element} - fields of element line by lie" +"\n" +
@@ -35,9 +35,9 @@ public class CommandTypeInformation {
         ));//да, это уродливая конструкция с рефлексией, оно выглядит страшно но работать будет
                
         
-        existingCommands.put("add_if_max",
+        existingCommands.put(CommandType.ADD_IF_MAX ,
         new CommandTypeInformationObject(
-            CommandType.ADD_IF_MAX ,
+            "add_if_max",
             "add_if_max" + "\n"+
             "  {element}" + "\n" +
             "    {element} - fields of element line by lie" +"\n" +
@@ -46,9 +46,9 @@ public class CommandTypeInformation {
             new ArrayList<Class>(Arrays.asList(String.class))
         ));
 
-        existingCommands.put("add_if_min",
+        existingCommands.put(CommandType.ADD_IF_MIN ,
         new CommandTypeInformationObject(
-            CommandType.ADD_IF_MIN ,
+            "add_if_min",
             "add_if_min" + "\n"+
             "  {element}" + "\n" +
             "    {element} - fields of element line by lie" +"\n" +
@@ -58,9 +58,9 @@ public class CommandTypeInformation {
         ));
 
 
-        existingCommands.put("clear",
+        existingCommands.put(CommandType.CLEAR,
         new CommandTypeInformationObject(
-            CommandType.CLEAR,
+            "clear",
             "clear" +
             "    Command removes all ticket from collection",
             null,
@@ -68,9 +68,9 @@ public class CommandTypeInformation {
         ));
                   
             
-        existingCommands.put("filter_by_price",
+        existingCommands.put(CommandType.FILTER_BY_PRICE,
         new CommandTypeInformationObject(
-            CommandType.FILTER_BY_PRICE,
+            "filter_by_price",
             "filter_by_price" + " <price>" + "\n" +
             "    <price> - price of ticket, real number" +"\n" +
             "    Command shows all tickets in collection with entered price",
@@ -79,9 +79,9 @@ public class CommandTypeInformation {
         ));
 
 
-        existingCommands.put("filter_less_than_type",
+        existingCommands.put(CommandType.FILTER_LESS_THAN_TYPE,
         new CommandTypeInformationObject(
-            CommandType.FILTER_LESS_THAN_TYPE,
+            "filter_less_than_type",
             "filter_less_than_type" + " <type>" + "\n" +
             "    <type> - type of ticket ticket. Can be: "+
             Stream.of( TicketType.values()).map(x -> x.name()).map(x -> x.concat(" ")).reduce("", String::concat)+"\n" +
@@ -90,9 +90,9 @@ public class CommandTypeInformation {
             new ArrayList<Class>(Arrays.asList(String.class, java.util.ArrayList.class))
         ));
             
-        existingCommands.put("info",
+        existingCommands.put(CommandType.INFO,
         new CommandTypeInformationObject(
-            CommandType.INFO,
+            "info",
             "info" + "\n" +
             "    Command shows information about current collection",
             null,
@@ -100,9 +100,9 @@ public class CommandTypeInformation {
         ));
         
         
-        existingCommands.put("print_ascending",
+        existingCommands.put(CommandType.PRINT_ASCENDING,
         new CommandTypeInformationObject(
-            CommandType.PRINT_ASCENDING,
+            "print_ascending",
             "print_ascending" + "\n" +
             "    Command sorts by price and shows all elements in collection ",
             null,
@@ -110,9 +110,9 @@ public class CommandTypeInformation {
         ));
 
         
-        existingCommands.put("remove_by_id",
+        existingCommands.put(CommandType.REMOVE_BY_ID,
         new CommandTypeInformationObject(
-            CommandType.REMOVE_BY_ID,
+            "remove_by_id",
             "remove_by_id" + " <id>" + "\n" +
             "    <id> - Ticket id, integer number" +"\n" +
             "    Command removes ticket from collection by id",
@@ -121,9 +121,9 @@ public class CommandTypeInformation {
         ));
         
 
-        existingCommands.put("remove_lower",
+        existingCommands.put(CommandType.REMOVE_LOWER,
         new CommandTypeInformationObject(
-            CommandType.REMOVE_LOWER,
+            "remove_lower",
             "remove_lower" + "\n"+
             "  {element}" + "\n" +
             "    {element} - fields of element line by lie" +"\n" +
@@ -132,18 +132,18 @@ public class CommandTypeInformation {
             new ArrayList<Class>(Arrays.asList(String.class))
         ));
         
-        existingCommands.put("show",
+        existingCommands.put(CommandType.SHOW,
         new CommandTypeInformationObject(
-            CommandType.SHOW,
+            "show",
             "show" + "\n" +
             "    Command shows all elements in collection",
             null,
             new ArrayList<Class>(Arrays.asList(String.class, java.util.ArrayList.class))
         ));
 
-        existingCommands.put("update",
+        existingCommands.put(CommandType.UPDATE,
         new CommandTypeInformationObject(
-            CommandType.UPDATE,// на стороне сервера надо добавить проверку на дурака чтобы id был больше 0, раньше это проверялось при заполнении команды, но теперь клиент может отправить обновление -1 элемента
+            "update",
             "update" + " <id> {element}" + "\n" +
             "    <id> - Ticket id, integer number" +"\n" +
             "    {element} - fields of element line by lie" +"\n" +
@@ -152,14 +152,27 @@ public class CommandTypeInformation {
             new ArrayList<Class>(Arrays.asList(String.class))
         ));
     }
-    public static CommandType commandTypeByStringName(String str){
-        return existingCommands.get(str).commandType;
+    public static CommandType commandTypeByCommandName(String str){
+        for(CommandType cType:existingCommands.keySet()){
+            if(existingCommands.get(cType).commandName.equals(str))
+                return cType;
+        }
+        return null;
+    }
+    public static String commandNameByCommandType(CommandType cType){
+        return existingCommands.get(cType).commandName;
     }
     public static ArrayList<Class> NeededParametersOfCommndType(String str){
-        return existingCommands.get(str).commandTypeParametersClasses;
+        return existingCommands.get(commandTypeByCommandName(str)).commandTypeParametersClasses;
+    }
+    public static ArrayList<Class> NeededParametersOfCommndType(CommandType cType){
+        return existingCommands.get(cType).commandTypeParametersClasses;
     }
     public static ArrayList<Class> ResponsedParametersOfCommndType(String str){
-        return existingCommands.get(str).commandTypeResponsedClasses;
+        return existingCommands.get(commandTypeByCommandName(str)).commandTypeResponsedClasses;
+    }
+    public static ArrayList<Class> ResponsedParametersOfCommndType(CommandType cType){
+        return existingCommands.get(cType).commandTypeResponsedClasses;
     }
     public static ArrayList<String> getArrayOfDocumentation(){
         return new ArrayList<String>(existingCommands.values().stream().map(x -> x.documentationString).collect(Collectors.toList()));
