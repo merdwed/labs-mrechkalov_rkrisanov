@@ -103,7 +103,10 @@ public class Ticket implements Serializable {
      * @param type type Ticket
      */
     public void setType(String type){
-        this.type=TicketType.valueOf(type);
+        if(type==null)
+            this.type=null;
+        else
+            this.type=TicketType.valueOf(type);
     }
 
     /**
