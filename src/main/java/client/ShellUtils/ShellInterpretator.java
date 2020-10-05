@@ -58,11 +58,15 @@ public class ShellInterpretator {
                     command.execute();
                 }
                 else{//если это серверная команда
+                    if(commandName.equals(CommandTypeInformation.commandNameByCommandType(CommandType.CREATE_ACCOUNT)))
+                        currentAccount=new Account("default","default");//КОСТЫЛЬ чтобы не отсылать NULL при регистриации
                     if(currentAccount==null){
-                        System.out.println("you can't use server commands without signing in account. use sign_in");
+                        System.out.println("you can't use server commands without signing in account. use "+CommandTypeInformation.commandNameByCommandType(CommandType.CREATE_ACCOUNT) +" or sign_in");
                         continue;
                     }
-                    formThePackageOut(commandType,commandName,vararg);// в stream отбрасываеся первая часть
+                    formThePackageOut(commandType,commandName,vararg);
+                    if(commandName.equals(CommandTypeInformation.commandNameByCommandType(CommandType.CREATE_ACCOUNT)))
+                        currentAccount=null;
                     long timeout;
                     boolean received;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

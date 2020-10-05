@@ -1,6 +1,7 @@
 package client.ClientNet;
 
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
+import DataClasses.Account;
 import DataClasses.Ticket;
 import DataClasses.TicketType;
 import client.ShellUtils.NoSourceException;
@@ -78,6 +79,10 @@ public class CommandTypeParameterDistributor {
                             } else {
                                 PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readTicketType("enter the type:"));
                             }
+                            continue;
+                        }
+                        if (currentParameterType == Account.class) {
+                            PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readAccount());
                             continue;
                         }
     
