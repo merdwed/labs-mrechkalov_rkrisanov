@@ -77,7 +77,7 @@ public class ShellInterpretator {
                         received=false;
                         while (!received) {
                             received = Request.getInstance().receive();
-                            if (System.currentTimeMillis() - timeout > 1000)
+                            if (System.currentTimeMillis() - timeout > 3000)
                                 break;
                         }
                         if (!received) {
@@ -131,7 +131,6 @@ public class ShellInterpretator {
         PackageOut.getInstance().getObjectOutputStream().writeObject(currentAccount);//нулевым в поток должен идти аккаунт
         PackageOut.getInstance().getObjectOutputStream().writeObject(command);//Первым в потоке должен быть тип команды
         CommandTypeParameterDistributor.fillIn(commandName, vararg);//дальше идут параметры
-
     }
 
 }
