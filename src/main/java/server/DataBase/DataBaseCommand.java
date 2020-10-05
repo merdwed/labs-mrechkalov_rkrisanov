@@ -32,19 +32,33 @@ public class DataBaseCommand {
     }
     public static void AddTicket(Ticket ticket) throws SQLException {
         String request = "INSERT INTO Ticket (id,name,coordinates,type,price,person,creater)" +
-                "VALUES(nextval('bigserial')" +
-                ",'"+ticket.getName()+"'" +
-                ",'("+ticket.getCoordinatesX()+","+ticket.getCoordinatesY()+")'" +
-                ",'"+ticket.getType()+"'" +
-                ","+ticket.getPrice() +
-                ",(" +
-                ticket.getPersonHeight() +
-                "," +ticket.getPersonWeight()+
-                ",(" + ticket.getPersonLocationX()+
-                "," + ticket.getPersonLocationY()+
-                "," +ticket.getPersonLocationZ()+
-                ",'" +ticket.getPersonLocationName()+"')),"+
-                "'"+Request.getInstance().getAccount().getLogin()+"');";
+                "VALUES(nextval('bigserial'),";
+        if (ticket.getName()==null) request+="NULL";
+        else request+="'"+ticket.getName()+"'";
+        request+=",";
+        if (ticket.getCoordinates()==null) request+="NULL";
+        else request+="("+ticket.getCoordinatesX()+","+ticket.getCoordinatesY()+")";
+        request+=",";
+        if (ticket.getType()==null) request+="NULL";
+        else request+="'"+ticket.getType()+"'";
+        request+=",";
+        if (ticket.getPrice()==null) request+="NULL";
+        else request+=ticket.getPrice();
+        request+=",";
+        if (ticket.getPerson()==null) request+="NULL";
+        else {
+            request += "(";
+            request += ticket.getPersonHeight()+","+ticket.getPersonWeight()+",";
+            if (ticket.getPersonLocation()==null) request+="NULL";
+            else request+="(" + ticket.getPersonLocationX() +
+                    "," + ticket.getPersonLocationY() +
+                    "," + ticket.getPersonLocationZ() +
+                    ",'" + ticket.getPersonLocationName() + "')";
+                    request+=")";
+        }
+        request+=",'";
+        request+=Request.getInstance().getAccount().getLogin()+"');";
+                System.out.println(request);
         statement.execute(request);
     }
     public static void UpdateTicket(Long id,Ticket ticket) throws SQLException {
