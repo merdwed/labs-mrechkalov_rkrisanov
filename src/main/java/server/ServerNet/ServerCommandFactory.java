@@ -21,6 +21,7 @@ public class ServerCommandFactory  {
             case PRINT_ASCENDING:{PrintAscendingCommand.execute(request,answer);break;}
             case UPDATE:{UpdateCommand.execute(request,answer);break;}
             case CREATE_ACCOUNT:{CreateAccountCommand.execute(request,answer);break;}
+            case DELETE_ACCOUNT:{DeleteAccountCommand.execute(request,answer);break;}
             default:
                 System.out.println("Команда не найдена");
         }

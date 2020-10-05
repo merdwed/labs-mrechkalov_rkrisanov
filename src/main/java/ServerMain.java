@@ -2,6 +2,7 @@ import DataClasses.*;
 import DataClasses.CommandTypeUtils.CommandType;
 import server.DataBase.DataBase;
 import server.DataBase.DataBaseCommand;
+import server.DataBase.DataBaseConnection;
 import server.Dataset;
 import server.ServerMediator;
 import server.ServerNet.*;
@@ -28,10 +29,70 @@ public class ServerMain {
 
         Connection.getInstance().setiAdd(new InetSocketAddress(host,port));
         Connection.getInstance().rebind();
-        connectionLogger.info("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
-        System.out.println("server started, host:\n " + Connection.getInstance().getHostname() + ":" + Connection.getInstance().getPORT());
+        connectionLogger.info("server started, host:\n " + Connection.getInstance().getiAdd().getHostName() + ":" + Connection.getInstance().getiAdd().getPort());
+        System.out.println("server started, host:\n " + Connection.getInstance().getiAdd().getHostName() + ":" + Connection.getInstance().getiAdd().getPort());
+
+        DataBaseConnection dataBaseConnection = new DataBaseConnection();
+        String ss;
+        System.out.print("enter a DataBase host:");
+        ss = reader.readLine();
+        if (ss.equals("")) {
+            dataBaseConnection.setDataBaseName("127.0.0.1");
+            System.out.println("installed default host:127.0.0.1");
+            connectionLogger.info("installed default host:127.0.0.1");
+        }
+        else {
+            dataBaseConnection.setDataBaseName(ss);
+            System.out.println("installed entered host:"+ss);
+            connectionLogger.info("installed entered host:"+ss);
+        }
+        System.out.print("enter a DataBase port:");
+        ss = reader.readLine();
+        if (ss.equals("")) {
+            dataBaseConnection.setDataBasePORT(5432);
+            System.out.println("installed default port:5432");
+            connectionLogger.info("installed default port:5432");
+        }
+        else {
+            dataBaseConnection.setDataBasePORT(Integer.valueOf(ss));
+            System.out.println("installed entered port:"+ss);
+            connectionLogger.info("installed entered port:"+ss);
+        }
+        System.out.print("enter a DataBase name:");
+        ss = reader.readLine();
+        if (ss.equals("")) {
+            dataBaseConnection.setDataBaseName("mydb");
+            System.out.println("installed default name:mydb");
+            connectionLogger.info("installed default name:mydb");
+        }
+        else {
+            dataBaseConnection.setDataBaseName(ss);
+            System.out.println("installed entered name:"+ss);
+            connectionLogger.info("installed entered name:"+ss);
+        }
+        dataBaseConnection.update();
+        System.out.println(dataBaseConnection.getDbUrl());
+        DataBase.getInstance().setDbUrl(dataBaseConnection.getDbUrl());
+        String name,password;
+        System.out.println("set the new user?(y/n)");
+        ss = reader.readLine();
+        if (ss.equals("y")) {
+            System.out.println("enter name");
+            name = reader.readLine();
+            System.out.println("enter password");
+            password = reader.readLine();
+            DataBase.getInstance().setSuperAccount(name,password);
+            System.out.println("installed user name:"+name);
+            connectionLogger.info("installed user name:"+name);
+        }
+        else{
+            System.out.println("installed user name:postgres");
+            connectionLogger.info("installed user name:postgres");
+        }
+
+
         DataBase.getInstance().Connect();
-        DataBaseCommand.setStatement(DataBase.getStatement());
+        DataBaseCommand.setStatement(DataBase.getInstance().getStatement());
         try {
             DataBaseCommand.getTicketCollection();
         } catch (SQLException e) {
@@ -59,7 +120,7 @@ public class ServerMain {
                     }
                     else
                     {
-                        answer.setToCurrans("It's wrong");
+                        answer.setToCurrans("Wrong account");
                         answer.prepare(request.getCommandType());
                         answer.send();
                     }
@@ -82,10 +143,6 @@ public class ServerMain {
                                 Dataset.getCurrentInstance().getArrayListCollection()) {
                             System.out.print(ticket);
                         }
-                        break;
-                    }
-                    case "delete_user":{
-                        System.out.println();
                         break;
                     }
                 }

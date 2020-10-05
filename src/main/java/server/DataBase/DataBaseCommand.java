@@ -2,6 +2,7 @@ package server.DataBase;
 
 import DataClasses.Account;
 import DataClasses.Ticket;
+import org.apache.commons.codec.digest.DigestUtils;
 import server.Dataset;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -110,15 +111,15 @@ public class DataBaseCommand {
         }
     }
     public static void CreateNewAccount(String username,String password) throws SQLException {
-        String request = "INSERT INTO users VALUES ('"+username+"','"+password+"');";
+        String request = "INSERT INTO users (username,password) VALUES ('"+username+"','"+ DigestUtils.md5Hex(password)+"');";
+        statement.execute(request);
+    }
+    public static void DeleteAccount(String username,String password) throws SQLException {
+        String request = "DELETE FROM users WHERE username='"+username+"' AND password'"+DigestUtils.md5Hex(password)+"';";
         statement.execute(request);
     }
 
     public static void setStatement(Statement statement) {
         DataBaseCommand.statement = statement;
-    }
-
-    public static void setAccount(Account account) {
-        DataBaseCommand.account = account;
     }
 }
