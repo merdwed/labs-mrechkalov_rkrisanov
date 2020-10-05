@@ -123,7 +123,7 @@ public class ShellInterpretator {
         return null;
     }
     private static void formThePackageOut(CommandType command, String commandName, String vararg)throws NoSourceException, IOException {
-        //PackageOut.getInstance().getObjectOutputStream().writeObject(currentAccount);//нулевым в поток должен идти аккаунт
+        PackageOut.getInstance().getObjectOutputStream().writeObject(currentAccount);//нулевым в поток должен идти аккаунт
         PackageOut.getInstance().getObjectOutputStream().writeObject(command);//Первым в потоке должен быть тип команды
         CommandTypeParameterDistributor.fillIn(commandName, vararg);//дальше идут параметры
 
