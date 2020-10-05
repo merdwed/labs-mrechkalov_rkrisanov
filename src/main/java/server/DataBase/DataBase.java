@@ -11,7 +11,7 @@ public class DataBase {
     }
     //static private DBConnection dBConnection = new DBConnection();= "jdbc:postgresql://127.0.0.1:5432/mydb";
     static private String DB_URL= "jdbc:postgresql://127.0.0.1:5432/mydb";
-    static private Account superAccount=new Account("postgres","142857");
+    static private Account superAccount=new Account("merdwed","142857");
     static private Connection connection=null;
     static private Statement statement=null;
     public void Connect(){

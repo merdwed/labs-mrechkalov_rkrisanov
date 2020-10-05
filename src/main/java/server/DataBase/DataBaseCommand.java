@@ -90,12 +90,20 @@ public class DataBaseCommand {
             ticket.setPrice(resultSet.getDouble(3));
             ticket.setCoordinatesX(resultSet.getFloat(4));
             ticket.setCoordinatesY(resultSet.getLong(5));
-            ticket.setPersonLocationX(resultSet.getDouble(6));
-            ticket.setPersonLocationY(resultSet.getLong(7));
-            ticket.setPersonLocationZ(resultSet.getLong(8));
-            ticket.setPersonLocationName(resultSet.getString(9));
-            ticket.setPersonHeight(resultSet.getDouble(10));
-            ticket.setPersonWeight(resultSet.getInt(11));
+            if(resultSet.getObject(10)==null)
+                ticket.setPerson(null);
+            else{
+                if(resultSet.getObject(6)==null)
+                    ticket.setPersonLocation(null);
+                else{
+                    ticket.setPersonLocationX(resultSet.getDouble(6));
+                    ticket.setPersonLocationY(resultSet.getLong(7));
+                    ticket.setPersonLocationZ(resultSet.getLong(8));
+                    ticket.setPersonLocationName(resultSet.getString(9));
+                }
+                ticket.setPersonHeight(resultSet.getDouble(10));
+                ticket.setPersonWeight(resultSet.getInt(11));
+            }
             ticket.setType(resultSet.getString(12));
             ticket.setCreator(resultSet.getString(13));
             Dataset.getCurrentInstance().add(ticket);
