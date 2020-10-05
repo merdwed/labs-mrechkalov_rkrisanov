@@ -10,14 +10,14 @@ public class CommandTypeResponseDecoder {
             try{
                 if(currentClass==String.class){
                     String message = (String)client.ClientNet.PackageIn.getInstance().getObjectInputStream().readObject();
-                    //System.out.println(message);
+                    System.out.println(message);
                     tempArray.add(message);
                     continue;
                 }
                 if(currentClass==ArrayList.class){
                     java.util.ArrayList arr = (java.util.ArrayList) client.ClientNet.PackageIn.getInstance().getObjectInputStream().readObject();
                     tempArray.add(arr);
-                    //System.out.println(arr.toString());
+                    System.out.println(arr.toString());
                     continue;
                 }
                 if(currentClass==Boolean.class){
