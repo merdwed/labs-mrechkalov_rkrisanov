@@ -17,6 +17,7 @@ public enum CommandType implements Serializable {
     FILTER_LESS_THAN_TYPE,
     PRINT_ASCENDING,
     UPDATE,
-    CREATE_ACCOUNT;
+    CREATE_ACCOUNT,
+    DELETE_ACCOUNT;
     private static final long serialVersionUID = 12L;
 }

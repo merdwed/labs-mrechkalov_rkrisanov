@@ -18,6 +18,10 @@ public class Person implements Serializable {
     private Integer weight; //Поле не может быть null, Значение поля должно быть больше 0
     private Location location=new Location(); //Поле может быть null
 
+    public Location getLocation() {
+        return this.location;
+    }
+
     /**
      * set location
      * @param location = location class

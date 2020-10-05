@@ -1,12 +1,16 @@
 package DataClasses;
 
+import DataClasses.Exception.WrongIdException;
+import DataClasses.Exception.WrongNameException;
+
 import java.io.Serializable;
 
 /**
  * @author Drukharion
  */
 public class Ticket implements Serializable {
-    public Ticket(TicketType type,Double price, String name,Coordinates coordinates,Person person, String creator){
+
+    public Ticket(TicketType type, Double price, String name, Coordinates coordinates, Person person, String creator){
         this.type = type;
         this.price=price;
         this.name = name;
@@ -41,6 +45,15 @@ public class Ticket implements Serializable {
         this.person.setLocation(l);
     }
 
+    public Person getPerson(){
+        return this.person;
+    }
+    public Coordinates getCoordinates(){
+        return this.coordinates;
+    }
+    public Location getPersonLocation(){
+        return this.person.getLocation();
+    }
     /**
      * Set name
      * @param name
