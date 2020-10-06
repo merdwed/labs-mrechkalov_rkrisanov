@@ -11,28 +11,43 @@ public class ServerMediator implements ServerCollectionInterface {
     }
     @Override
     public void add(Ticket element) {
+        Dataset.getCurrentInstance().lock.writeLock().lock();
         Dataset.getCurrentInstance().add(element);
+        Dataset.getCurrentInstance().lock.writeLock().unlock();
     }
     @Override
     public void remove(Long id) {
+        Dataset.getCurrentInstance().lock.writeLock().lock();
         Dataset.getCurrentInstance().remove(id);
+        Dataset.getCurrentInstance().lock.writeLock().unlock();
     }
 
     public boolean exist(Long id){
-        return Dataset.getCurrentInstance().exist(id);
+        Dataset.getCurrentInstance().lock.readLock().lock();
+        boolean b= Dataset.getCurrentInstance().exist(id);
+        Dataset.getCurrentInstance().lock.readLock().unlock();
+        return b;
     }
 
     public ArrayList<Ticket> getArrayListCollection(){
-        return Dataset.getCurrentInstance().getArrayListCollection();
+        Dataset.getCurrentInstance().lock.readLock().lock();
+        ArrayList<Ticket> temp= Dataset.getCurrentInstance().getArrayListCollection();
+        Dataset.getCurrentInstance().lock.readLock().unlock();
+        return temp;
     }
 
     public ArrayList<Ticket> getSortedArrayList(Comparator<Ticket> comp) {
+        Dataset.getCurrentInstance().lock.readLock().lock();
         ArrayList<Ticket> collection=ServerMediator.getInstance().getArrayListCollection();
+        Dataset.getCurrentInstance().lock.readLock().unlock();
         collection.sort(comp);
         return collection;
     }
     @Override
     public String getInfo(){
-        return Dataset.getCurrentInstance().getInfo();
+        Dataset.getCurrentInstance().lock.readLock().lock();
+        String tempString =Dataset.getCurrentInstance().getInfo();
+        Dataset.getCurrentInstance().lock.readLock().unlock();
+        return tempString;
     }
 }

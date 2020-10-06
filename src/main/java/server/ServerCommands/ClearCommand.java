@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class ClearCommand extends Command {
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         ServerMediator.getInstance().getArrayListCollection().forEach(element -> {
                     try {
                         if (DataBaseCommand.TicketIsExist(element.getId())) {

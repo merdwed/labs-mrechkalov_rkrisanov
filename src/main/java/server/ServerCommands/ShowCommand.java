@@ -6,7 +6,7 @@ import server.ServerNet.Answer;
 import server.ServerNet.Request;
 
 public class ShowCommand extends Command {
-    public static void execute(Request request, Answer answer)  {
+    public void execute(Request request, Answer answer)  {
         answer.setToCurrans("Collection:");
         answer.setToCurrans(ServerMediator.getInstance().getSortedArrayList(new NameComparator()));
     }

@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author Drukharion
@@ -22,7 +24,7 @@ public class Dataset implements ServerCollectionInterface, Serializable {
     }
 
     private java.util.HashSet<Ticket> collection = new java.util.HashSet<Ticket>();
-
+    public ReadWriteLock lock = new ReentrantReadWriteLock();
     /**
      * @param element be added to collection
      */

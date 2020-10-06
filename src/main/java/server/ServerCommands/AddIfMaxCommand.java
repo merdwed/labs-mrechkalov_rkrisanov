@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddIfMaxCommand extends Command {
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         Ticket ticket;
             ticket = (Ticket) request.getArg();
         try {

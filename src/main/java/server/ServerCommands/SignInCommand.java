@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class SignInCommand extends Command {
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         Account account = (Account)request.getArg();
         if (account.getPassword()==null)
             account = new Account(account.getLogin(),"");

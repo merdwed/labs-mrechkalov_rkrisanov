@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class UpdateCommand extends Command{
-    public static void execute(Request request, Answer answer) throws IOException{
+    @Override
+    public void execute(Request request, Answer answer) {
         Long id;
         Ticket ticket;
         try {

@@ -22,7 +22,7 @@ public class Connection {
     {
         try {
             server = DatagramChannel.open();
-            server.configureBlocking(false);
+            //server.configureBlocking(false);
         } catch (IOException e) {
             e.printStackTrace();
         }

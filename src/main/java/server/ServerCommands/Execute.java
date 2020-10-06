@@ -1,6 +1,8 @@
 package server.ServerCommands;
 
+import server.ServerNet.Answer;
+import server.ServerNet.Request;
+
 public interface Execute {
-    static void execute() {
-    }
+    public abstract void execute(Request request, Answer answer);
 }

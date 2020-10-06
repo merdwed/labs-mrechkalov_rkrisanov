@@ -6,24 +6,25 @@ import DataClasses.CommandTypeUtils.CommandType;
 import server.ServerCommands.*;
 
 public class ServerCommandFactory  {
-    public static void executeCommand(Request request,Answer answer) throws IOException {
-        switch (request.getCommandType()){
-            case ADD:{AddCommand.execute(request,answer);break;}
-            case ADD_IF_MAX:{AddIfMaxCommand.execute(request,answer);break;}
-            case ADD_IF_MIN:{AddIfMinCommand.execute(request,answer);break;}
-            case SHOW:{ShowCommand.execute(request,answer);break;}
-            case INFO:{InfoCommand.execute(request,answer);break;}
-            case CLEAR:{ClearCommand.execute(request,answer);break;}
-            case REMOVE_BY_ID:{RemoveByIdCommand.execute(request,answer);break;}
-            case REMOVE_LOWER:{RemoveLowerCommand.execute(request,answer);break;}
-            case FILTER_BY_PRICE:{FilterByPriceCommand.execute(request,answer);break;}
-            case FILTER_LESS_THAN_TYPE:{FilterLessThanTypeCommand.execute(request,answer);break;}
-            case PRINT_ASCENDING:{PrintAscendingCommand.execute(request,answer);break;}
-            case UPDATE:{UpdateCommand.execute(request,answer);break;}
-            case CREATE_ACCOUNT:{CreateAccountCommand.execute(request,answer);break;}
-            case DELETE_ACCOUNT:{DeleteAccountCommand.execute(request,answer);break;}
+    public static Command createCommand(CommandType ct) throws IOException {
+        switch (ct){
+            case ADD:{return new AddCommand();}
+            case ADD_IF_MAX:{return new AddIfMaxCommand();}
+            case ADD_IF_MIN:{return new AddIfMinCommand();}
+            case SHOW:{return new ShowCommand();}
+            case INFO:{return new InfoCommand();}
+            case CLEAR:{return new ClearCommand();}
+            case REMOVE_BY_ID:{return new RemoveByIdCommand();}
+            case REMOVE_LOWER:{return new RemoveLowerCommand();}
+            case FILTER_BY_PRICE:{return new FilterByPriceCommand();}
+            case FILTER_LESS_THAN_TYPE:{return new FilterLessThanTypeCommand();}
+            case PRINT_ASCENDING:{return new PrintAscendingCommand();}
+            case UPDATE:{return new UpdateCommand();}
+            case CREATE_ACCOUNT:{return new CreateAccountCommand();}
+            case DELETE_ACCOUNT:{return new DeleteAccountCommand();}
             default:
                 System.out.println("Команда не найдена");
+                return null;
         }
     }
 }

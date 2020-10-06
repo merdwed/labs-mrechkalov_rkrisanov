@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class FilterLessThanTypeCommand extends Command {
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         TicketType ticketType;
             ticketType = (TicketType) request.getArg();
             answer.setToCurrans("Collection sorted less by ticketType"+ticketType.toString());

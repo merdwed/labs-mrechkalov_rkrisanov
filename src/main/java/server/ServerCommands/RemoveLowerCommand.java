@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class RemoveLowerCommand extends Command{
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         Ticket ticket = (Ticket) request.getArg();
         answer.setToCurrans("Every ticket from the collection less the ticket is removed");
         ServerMediator.getInstance().getArrayListCollection().stream().filter

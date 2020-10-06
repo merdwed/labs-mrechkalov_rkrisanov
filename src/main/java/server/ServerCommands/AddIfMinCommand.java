@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddIfMinCommand extends Command {
-    public static void execute(Request request, Answer answer) throws IOException {
+    public void execute(Request request, Answer answer) {
         Ticket ticket;
         ticket = (Ticket) request.getArg();
         try {

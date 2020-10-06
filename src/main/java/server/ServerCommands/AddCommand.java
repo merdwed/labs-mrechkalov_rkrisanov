@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class AddCommand extends Command {
 
-    public static void execute(Request request,Answer answer) throws IOException {
+    public void execute(Request request,Answer answer) {
         try {
             Ticket ticket = (Ticket) request.getArg();
             DataBaseCommand.AddTicket(ticket,request.getAccount());
