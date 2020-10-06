@@ -38,12 +38,12 @@ public class ServerMain {
         System.out.print("enter a DataBase host:");
         ss = reader.readLine();
         if (ss.equals("")) {
-            dataBaseConnection.setDataBaseName("127.0.0.1");
+            dataBaseConnection.setHostname("127.0.0.1");
             System.out.println("installed default host:127.0.0.1");
             LoggerForkJoinTask.connectionLogger.info("installed default host:127.0.0.1");
         }
         else {
-            dataBaseConnection.setDataBaseName(ss);
+            dataBaseConnection.setHostname(ss);
             System.out.println("installed entered host:"+ss);
             LoggerForkJoinTask.connectionLogger.info("installed entered host:"+ss);
         }
