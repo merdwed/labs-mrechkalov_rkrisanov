@@ -115,7 +115,7 @@ public class DataBaseCommand {
         statement.execute(request);
     }
     public static void DeleteAccount(String username,String password) throws SQLException {
-        String request = "DELETE FROM users WHERE username='"+username+"' AND password'"+DigestUtils.md5Hex(password)+"';";
+        String request = "DELETE FROM users WHERE username='"+username+"' AND password='"+DigestUtils.md5Hex(password)+"';";
         statement.execute(request);
     }
 
