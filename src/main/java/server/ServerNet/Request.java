@@ -15,7 +15,7 @@ public class Request {
         currans = new ArrayList<Object>();
     }
     private PackageIn packageIn;
-    private ByteBuffer buffer = ByteBuffer.allocate(1024);
+    private ByteBuffer buffer = ByteBuffer.allocate(4096);
     private Account account=null;
     private CommandType commandType;
     private ArrayList<Object> currans;
