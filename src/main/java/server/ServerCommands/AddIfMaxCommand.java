@@ -4,6 +4,7 @@ import DataClasses.Comparators.PriceComparator;
 import DataClasses.Ticket;
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.PackageIn;
 import server.ServerNet.Request;
@@ -20,6 +21,7 @@ public class AddIfMaxCommand extends Command {
                 DataBaseCommand.AddTicket(ticket,request.getAccount());
                 ticket.setId(DataBaseCommand.getCurrId());
                 answer.setToCurrans("Ticket added successful");
+                ActiveUsers.getInstance().CollectionChanged();
             } else {
                 answer.setToCurrans("Ticket wasn't added");
             }

@@ -3,6 +3,7 @@ package server.ServerCommands;
 import DataClasses.Ticket;
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.PackageIn;
 import server.ServerNet.Request;
@@ -20,6 +21,7 @@ public class AddIfMinCommand extends Command {
             ticket.setId(DataBaseCommand.getCurrId());
             ServerMediator.getInstance().add(ticket);
             answer.setToCurrans("Ticket added successful");
+            ActiveUsers.getInstance().CollectionChanged();
         } else {
             answer.setToCurrans("Ticket wasn't added");
         }

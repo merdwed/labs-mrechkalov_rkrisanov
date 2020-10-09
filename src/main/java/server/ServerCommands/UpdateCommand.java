@@ -5,6 +5,7 @@ import DataClasses.Exception.TicketIsNotExistException;
 import DataClasses.Ticket;
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.PackageIn;
 import server.ServerNet.Request;
@@ -30,6 +31,7 @@ public class UpdateCommand extends Command{
                     ServerMediator.getInstance().remove(id);
                     ServerMediator.getInstance().add(ticket);
                     answer.setToCurrans("Ticket updated successful");
+                    ActiveUsers.getInstance().CollectionChanged();
                 }
                 else
                     answer.setToCurrans("Wrong user");

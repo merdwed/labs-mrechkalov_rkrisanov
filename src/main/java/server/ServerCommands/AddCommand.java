@@ -3,6 +3,7 @@ package server.ServerCommands;
 import DataClasses.Ticket;
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.Request;
 
@@ -18,6 +19,7 @@ public class AddCommand extends Command {
             ticket.setId(DataBaseCommand.getCurrId());
             ServerMediator.getInstance().add(ticket);
             answer.setToCurrans("Ticket added successful");
+            ActiveUsers.getInstance().CollectionChanged();
         } catch (SQLException e) {
             e.printStackTrace();
             answer.setToCurrans("Ticket didn't added");

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import DataClasses.CommandTypeUtils.CommandType;
 import server.DataBase.DataBase;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.Connection;
 import server.ServerNet.Request;
@@ -24,6 +25,7 @@ public class AnswerRunnableTask implements Runnable {
 
                 answer.prepare(request.getCommandType());
                 answer.send();
+                ActiveUsers.getInstance().send();
                 LoggerForkJoinTask.connectionLogger.info("Answer sent to " + Connection.getInstance().getRemoteAdd());//КОСТЫЛЬ
             }
             else

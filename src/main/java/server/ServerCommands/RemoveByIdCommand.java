@@ -4,6 +4,7 @@ import DataClasses.Exception.IdLessZeroException;
 import DataClasses.Exception.TicketIsNotExistException;
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.PackageIn;
 import server.ServerNet.Request;
@@ -25,6 +26,7 @@ public class RemoveByIdCommand extends Command {
                     DataBaseCommand.RemoveTicket(id);
                     ServerMediator.getInstance().remove(id);
                     answer.setToCurrans("Ticket deleted successful");
+                    ActiveUsers.getInstance().CollectionChanged();
                 }
                 else
                     answer.setToCurrans("Wrong user");

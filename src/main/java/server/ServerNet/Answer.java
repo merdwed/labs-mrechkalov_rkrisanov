@@ -4,6 +4,7 @@ import DataClasses.CommandTypeUtils.CommandType;
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
 
 import java.io.IOException;
+import java.net.SocketAddress;
 import java.util.ArrayList;
 
 public class Answer {
@@ -17,12 +18,22 @@ public class Answer {
         packageOut.ToClose();
         Connection.getInstance().getServer().send(packageOut.getBufferOut(),Connection.getInstance().getRemoteAdd());
     }
+    public void send(SocketAddress socketAddress) throws IOException {
+        packageOut.ToClose();
+        Connection.getInstance().getServer().send(packageOut.getBufferOut(),socketAddress);
+    }
     public void prepare(CommandType commandType) throws IOException {
         ArrayList<Class> requestAnsForm =  CommandTypeInformation.ResponsedParametersOfCommndType(commandType);
         while(requestAnsForm.size()-currans.size()>0)
             currans.add(null);
         for (Object obj:
-        currans) {
+                currans) {
+            packageOut.getObjectOutputStream().writeObject(obj);
+        }
+    }
+    public void prepare() throws IOException {
+        for (Object obj:
+                currans) {
             packageOut.getObjectOutputStream().writeObject(obj);
         }
     }

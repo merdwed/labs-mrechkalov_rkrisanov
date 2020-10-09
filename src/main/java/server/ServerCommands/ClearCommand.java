@@ -2,6 +2,7 @@ package server.ServerCommands;
 
 import server.DataBase.DataBaseCommand;
 import server.ServerMediator;
+import server.ServerNet.ActiveUsers;
 import server.ServerNet.Answer;
 import server.ServerNet.Request;
 
@@ -25,5 +26,6 @@ public class ClearCommand extends Command {
         }
         );
         answer.setToCurrans("User's tickets is cleaned up");
+        ActiveUsers.getInstance().CollectionChanged();
     }
 }
