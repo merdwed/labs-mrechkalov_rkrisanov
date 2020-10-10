@@ -30,7 +30,7 @@ public class AnswerRunnableTask implements Runnable {
             }
             else
             {
-                answer.setToCurrans("It's wrong user");
+                answer.setToCurrans("Wrong user\nAccount isn't exist");
                 answer.prepare(request.getCommandType());
                 answer.send();
             }

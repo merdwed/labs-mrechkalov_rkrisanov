@@ -19,11 +19,12 @@ public class AddIfMinCommand extends Command {
         if (ServerMediator.getInstance().getArrayListCollection().stream().allMatch(x -> x.getPrice().compareTo(ticket.getPrice()) >= 0)) {
             DataBaseCommand.AddTicket(ticket,request.getAccount());
             ticket.setId(DataBaseCommand.getCurrId());
+            ticket.setCreator(request.getAccount().getLogin());
             ServerMediator.getInstance().add(ticket);
             answer.setToCurrans("Ticket added successful");
             ActiveUsers.getInstance().CollectionChanged();
         } else {
-            answer.setToCurrans("Ticket wasn't added");
+            answer.setToCurrans("Ticket didn't add");
         }
         } catch (SQLException e) {
             e.printStackTrace();

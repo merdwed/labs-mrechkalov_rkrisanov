@@ -20,10 +20,11 @@ public class AddIfMaxCommand extends Command {
             if (ServerMediator.getInstance().getSortedArrayList(new PriceComparator()).get(0).getPrice().compareTo(ticket.getPrice()) < 0) {
                 DataBaseCommand.AddTicket(ticket,request.getAccount());
                 ticket.setId(DataBaseCommand.getCurrId());
+                ticket.setCreator(request.getAccount().getLogin());
                 answer.setToCurrans("Ticket added successful");
                 ActiveUsers.getInstance().CollectionChanged();
             } else {
-                answer.setToCurrans("Ticket wasn't added");
+                answer.setToCurrans("Ticket didn't add");
             }
         } catch (SQLException e) {
             e.printStackTrace();

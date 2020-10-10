@@ -17,12 +17,13 @@ public class AddCommand extends Command {
             Ticket ticket = (Ticket) request.getArg();
             DataBaseCommand.AddTicket(ticket,request.getAccount());
             ticket.setId(DataBaseCommand.getCurrId());
+            ticket.setCreator(request.getAccount().getLogin());
             ServerMediator.getInstance().add(ticket);
             answer.setToCurrans("Ticket added successful");
             ActiveUsers.getInstance().CollectionChanged();
         } catch (SQLException e) {
             e.printStackTrace();
-            answer.setToCurrans("Ticket didn't added");
+            answer.setToCurrans("Ticket didn't add");
         }
 
     }
