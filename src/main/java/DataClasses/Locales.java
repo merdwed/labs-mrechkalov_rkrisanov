@@ -1,6 +1,7 @@
 package DataClasses;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Locales {
     private Locales(){
@@ -39,7 +40,9 @@ public class Locales {
     public void resetLocale(){
             bundle = ResourceBundle.getBundle("DataClasses.locales.Message",new Locale(""));
     }
-
+    public List<String> getListOfLocales(){
+        return new ArrayList<String> (supportedlocales.stream().map((t)->t.toString()).collect(Collectors.toList()));
+    }
     public String getSupportedlocales() {
         String supportedlanguage="";
         for (Locale locale:
