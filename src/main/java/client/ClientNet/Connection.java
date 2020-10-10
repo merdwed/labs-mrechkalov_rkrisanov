@@ -15,7 +15,7 @@ public class Connection {
 
     private int PORT = 8989;
     private String hostname = "127.0.0.1";//"localhost";
-    private DatagramChannel client;
+    private DatagramChannel client=null;
     private SocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
     {init();}
     private void init()
@@ -26,6 +26,16 @@ public class Connection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void reinit(){
+        if (client!=null)
+            try {
+                client.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        init();
     }
 
     //bind inet with current hostname and port

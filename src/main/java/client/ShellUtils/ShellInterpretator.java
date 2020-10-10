@@ -64,11 +64,11 @@ public class ShellInterpretator {
                         continue;
                     }
                     ArrayList<Serializable> arrayArg=CommandTypeParameterDistributor.readArgArrayList(commandType, vararg);
-                    ClientNetMediator.formThePackageOut(commandType,arrayArg);
+                    PackageOut packageOut=ClientNetMediator.formThePackageOut(commandType,arrayArg);
                     if(commandName.equals(CommandTypeInformation.commandNameByCommandType(CommandType.CREATE_ACCOUNT)))
                         ClientNetMediator.setCurrentAccount(null);
                    
-                    ClientNetMediator.sendAndRecieveFromServer(commandType);
+                    ClientNetMediator.sendAndRecieveFromServer(commandType,packageOut);
                     
 
                 }

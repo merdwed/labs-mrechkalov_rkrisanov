@@ -7,6 +7,7 @@ import DataClasses.Ticket;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -20,13 +21,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class Dataset {
     private static Dataset currentInstance=new Dataset();
-
+    
     public static Dataset getCurrentInstance() {
         return currentInstance;
     }
 
     private List<Ticket> collection = new LinkedList<Ticket>();
-    public ReadWriteLock lock = new ReentrantReadWriteLock();
+    //public ReadWriteLock lock = new ReentrantReadWriteLock();
+    public void clear(){
+        collection.clear();
+    }
     /**
      * @param element be added to collection
      */

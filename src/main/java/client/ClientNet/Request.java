@@ -18,8 +18,10 @@ public class Request {
         socketAddress=Connection.getInstance().getClient().receive(buffer);
         return socketAddress != null;
     }
-    public void prossessing() throws IOException {
-        PackageIn.getInstance().setBufferIn(buffer);
+    public PackageIn prossessing() throws IOException {
+        PackageIn temp =new PackageIn();
+        temp.setBufferIn(buffer);
+        return temp;
     }
 }
 

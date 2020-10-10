@@ -6,8 +6,8 @@ import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 
 public class PackageOut {
-    private static PackageOut packageOut = new PackageOut();
-    public static PackageOut getInstance() { return packageOut; }
+    //private static PackageOut packageOut = new PackageOut();
+    //public static PackageOut getInstance() { return packageOut; }
 
     private ByteArrayOutputStream byteArrayOutputStream;//=new ByteArrayOutputStream();
     private ObjectOutputStream objectOutputStream;

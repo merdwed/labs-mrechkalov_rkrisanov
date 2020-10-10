@@ -6,8 +6,8 @@ import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 
 public class PackageIn {
-    private static PackageIn packageIn = new PackageIn();
-    public static PackageIn getInstance() { return packageIn; }
+    //private static PackageIn packageIn = new PackageIn();
+    //public PackageIn getInstance() { return packageIn; }
     private ObjectInputStream objectInputStream;
     private ByteArrayInputStream byteArrayInputStream;
 

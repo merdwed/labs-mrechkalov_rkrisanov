@@ -97,10 +97,10 @@ public class CommandTypeParameterDistributor {
             
                 return ar;
     }
-    public static void fillIn(List<Serializable> arrayArg)throws IOException {
+    public static void fillIn(List<Serializable> arrayArg, PackageOut packageOut)throws IOException {
         if(arrayArg==null)return;
         for(Object t:arrayArg)
-			PackageOut.getInstance().getObjectOutputStream().writeObject(t);
+            packageOut.getObjectOutputStream().writeObject(t);
 
     }
 }
