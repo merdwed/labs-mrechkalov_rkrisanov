@@ -110,6 +110,7 @@ public class ServerMain {
         while(true) {
             Request request = new Request();
             if (request.receive()) {
+                ActiveUsers.getInstance().add(Connection.getInstance().getRemoteAdd());
                 ThreadPools.prossesService.submit(new ProssesRunnableTask(request));
             }
         }
