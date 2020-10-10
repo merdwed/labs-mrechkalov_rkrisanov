@@ -1,5 +1,6 @@
 package client.ClientCommands;
 
+import client.ClientNet.ClientNetMediator;
 import client.ShellUtils.ShellInterpretator;
 
 /**
@@ -17,7 +18,7 @@ public class SignOutCommand extends Command {
     */
     @Override
     public void execute(){
-        ShellInterpretator.setCurrentAccount(null);
+        ClientNetMediator.setCurrentAccount(null);
     }
     /**
      * @see Command#getDocumentation()

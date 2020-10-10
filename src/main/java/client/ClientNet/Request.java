@@ -7,8 +7,8 @@ import java.nio.ByteBuffer;
 public class Request {
     public Request(){
     }
-    private static Request request = new Request();
-    public static Request getInstance() { return request; }
+    //private static Request request = new Request();
+    
     private ByteBuffer buffer = ByteBuffer.allocate(4096);
 
 

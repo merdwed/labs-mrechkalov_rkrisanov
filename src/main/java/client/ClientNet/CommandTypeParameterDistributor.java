@@ -1,5 +1,6 @@
 package client.ClientNet;
 
+import DataClasses.CommandTypeUtils.CommandType;
 import DataClasses.CommandTypeUtils.CommandTypeInformation;
 import DataClasses.Account;
 import DataClasses.Ticket;
@@ -9,8 +10,11 @@ import client.ShellUtils.ShellIO;
 import client.ShellUtils.ShellParser;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 public class CommandTypeParameterDistributor {
     /**
@@ -24,16 +28,14 @@ public class CommandTypeParameterDistributor {
      * @throws IOException
      * @throws NoSourceException
      */
-    public static void fillIn(String commandName, String vararg) throws IOException, NoSourceException {
-
-                Iterator<String> stringIterator;
-                if(CommandTypeInformation.NeededParametersOfCommndType(commandName)==null)
-                    return;
-                Iterator<Class> parameterIterator=CommandTypeInformation.NeededParametersOfCommndType(commandName).iterator();
+    public static ArrayList<Serializable> readArgArrayList(CommandType commandType, String vararg) throws NoSourceException {
+        if(CommandTypeInformation.NeededParametersOfCommndType(commandType)==null)
+                    return null;
+        ArrayList<Serializable> ar=new ArrayList<Serializable>();
+        Iterator<String> stringIterator=null;
+        Iterator<Class> parameterIterator=CommandTypeInformation.NeededParametersOfCommndType(commandType).iterator();
                 if(vararg != null && vararg.isEmpty()==false)
                     stringIterator = Arrays.asList(vararg.split(" ")).iterator();
-                else
-                    stringIterator = null;
                 Class currentParameterType;
                 String currentString;
                 while (parameterIterator.hasNext()) {
@@ -47,42 +49,42 @@ public class CommandTypeParameterDistributor {
     
                         if (currentParameterType == String.class) {
                             if (currentString != null && ShellParser.parseString(currentString) != null) {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellParser.parseString(currentString));
+                                ar.add(ShellParser.parseString(currentString));
                             } else {
-                               PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readString("enter the string:"));
+                               ar.add(ShellIO.readString("enter the string:"));
                             }
                             continue;
                         }
                         if (currentParameterType == Long.class) {
                             if (currentString != null && ShellParser.parseLong(currentString) != null) {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellParser.parseLong(currentString));
+                                ar.add(ShellParser.parseLong(currentString));
                             } else {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readLong("enter the number:"));
+                                ar.add(ShellIO.readLong("enter the number:"));
                             }
                             continue;
                         }
                         if (currentParameterType == Double.class) {
                             if (currentString != null && ShellParser.parseDouble(currentString) != null) {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellParser.parseDouble(currentString));
+                                ar.add(ShellParser.parseDouble(currentString));
                             } else {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readDouble("enter the number:"));
+                                ar.add(ShellIO.readDouble("enter the number:"));
                             }
                             continue;
                         }
                         if (currentParameterType == Ticket.class) {
-                            PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readTicket());
+                            ar.add(ShellIO.readTicket());
                             continue;
                         }
                         if (currentParameterType == TicketType.class) {
                             if (currentString != null && ShellParser.parseTicketType(currentString.toUpperCase()) != null) {
-                                ShellParser.parseTicketType(currentString.toUpperCase());
+                                ar.add(ShellParser.parseTicketType(currentString.toUpperCase()));
                             } else {
-                                PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readTicketType("enter the type:"));
+                                ar.add(ShellIO.readTicketType("enter the type:"));
                             }
                             continue;
                         }
                         if (currentParameterType == Account.class) {
-                            PackageOut.getInstance().getObjectOutputStream().writeObject(ShellIO.readAccount());
+                            ar.add(ShellIO.readAccount());
                             continue;
                         }
     
@@ -93,7 +95,12 @@ public class CommandTypeParameterDistributor {
                     }
                 }
             
-    
-        }
+                return ar;
     }
-    
+    public static void fillIn(List<Serializable> arrayArg)throws IOException {
+        if(arrayArg==null)return;
+        for(Object t:arrayArg)
+			PackageOut.getInstance().getObjectOutputStream().writeObject(t);
+
+    }
+}

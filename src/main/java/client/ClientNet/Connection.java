@@ -17,11 +17,12 @@ public class Connection {
     private String hostname = "127.0.0.1";//"localhost";
     private DatagramChannel client;
     private SocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
-
+    {init();}
+    private void init()
     {
         try {
             client = DatagramChannel.open();
-            client.configureBlocking(false);
+            //client.configureBlocking(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,5 +63,13 @@ public class Connection {
 
     public void setServerAddress(InetSocketAddress serverAddress) {
         this.serverAddress = serverAddress;
+        try {
+            client.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            //e.printStackTrace();
+        }
+        init();
+        rebind();
     }
 }

@@ -1,5 +1,6 @@
 package client.ClientCommands;
 
+import client.ClientNet.ClientNetMediator;
 import client.ShellUtils.ShellInterpretator;
 
 /**
@@ -17,7 +18,7 @@ public class SignInCommand extends AccountParametrizedCommand {
     */
     @Override
     public void execute(){
-        ShellInterpretator.setCurrentAccount(parameter);
+        ClientNetMediator.setCurrentAccount(parameter);
     }
     /**
      * @see Command#getDocumentation()

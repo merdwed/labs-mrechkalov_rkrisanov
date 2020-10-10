@@ -2,6 +2,13 @@ package client.ClientNet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import DataClasses.Ticket;
+import DataClasses.CommandTypeUtils.CommandType;
+import DataClasses.CommandTypeUtils.CommandTypeInformation;
+import client.GraphicsUtils.Dataset;
+import client.GraphicsUtils.GlobalWindow;
 
 public class CommandTypeResponseDecoder {
     public static ArrayList<Object> decode(ArrayList<Class> classes)throws IOException{
@@ -30,5 +37,19 @@ public class CommandTypeResponseDecoder {
             System.out.println("unsupported Class " + currentClass.toString() + " please look do response decoder");
         }
         return tempArray; 
+    }
+    public static void process(CommandType command, List<Object> response){
+        int index=0;
+        for(Class cl: CommandTypeInformation.ResponsedParametersOfCommndType(command)){
+            if(cl == String.class){
+                GlobalWindow.getInstance().printInformation((String)response.get(index));
+            }
+            if(cl == ArrayList.class){
+                Dataset.getCurrentInstance().update((ArrayList<Ticket>)(response.get(index)));
+                GlobalWindow.getInstance().update(Dataset.idComparator);
+            }
+            index++;
+        }
+
     }
 }

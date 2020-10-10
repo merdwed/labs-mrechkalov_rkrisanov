@@ -7,7 +7,6 @@
     <groupId>lab7</groupId>
     <artifactId>Client</artifactId>
     <version>1.0</version>
-
     <properties>
         <logstash.host>logstashcsm.example.ru</logstash.host>
     </properties>
@@ -113,7 +112,6 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <groupId>lab7</groupId>
