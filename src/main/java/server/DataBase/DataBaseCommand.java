@@ -66,29 +66,29 @@ public class DataBaseCommand {
         RemoveTicket(id);
         String request = "INSERT INTO Ticket (id,name,coordinates,type,price,person,creater)" +
         "VALUES(nextval('bigserial'),";
-if (ticket.getName()==null) request+="NULL";
-else request+="'"+ticket.getName()+"'";
-request+=",";
-if (ticket.getCoordinates()==null) request+="NULL";
-else request+="("+ticket.getCoordinatesX()+","+ticket.getCoordinatesY()+")";
-request+=",";
-if (ticket.getType()==null) request+="NULL";
-else request+="'"+ticket.getType()+"'";
-request+=",";
-if (ticket.getPrice()==null) request+="NULL";
-else request+=ticket.getPrice();
-request+=",";
-if (ticket.getPerson()==null) request+="NULL";
-else {
-    request += "(";
-    request += ticket.getPersonHeight()+","+ticket.getPersonWeight()+",";
-    if (ticket.getPersonLocation()==null) request+="NULL";
-    else request+="(" + ticket.getPersonLocationX() +
-            "," + ticket.getPersonLocationY() +
-            "," + ticket.getPersonLocationZ() +
-            ",'" + ticket.getPersonLocationName() + "')";
+        if (ticket.getName()==null) request+="NULL";
+        else request+="'"+ticket.getName()+"'";
+        request+=",";
+        if (ticket.getCoordinates()==null) request+="NULL";
+        else request+="("+ticket.getCoordinatesX()+","+ticket.getCoordinatesY()+")";
+        request+=",";
+        if (ticket.getType()==null) request+="NULL";
+        else request+="'"+ticket.getType()+"'";
+        request+=",";
+        if (ticket.getPrice()==null) request+="NULL";
+        else request+=ticket.getPrice();
+        request+=",";
+        if (ticket.getPerson()==null) request+="NULL";
+        else {
+            request += "(";
+            request += ticket.getPersonHeight()+","+ticket.getPersonWeight()+",";
+            if (ticket.getPersonLocation()==null) request+="NULL";
+            else request+="(" + ticket.getPersonLocationX() +
+                "," + ticket.getPersonLocationY() +
+                "," + ticket.getPersonLocationZ() +
+                ",'" + ticket.getPersonLocationName() + "')";
             request+=")";
-}
+        }
 request+=",'";
 request+=account.getLogin()+"');";
 statement.execute(request);
