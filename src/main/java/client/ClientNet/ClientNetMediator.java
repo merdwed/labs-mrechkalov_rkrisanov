@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import DataClasses.Account;
 import DataClasses.CommandTypeUtils.CommandType;
@@ -29,7 +31,7 @@ public class ClientNetMediator {
     public static Account getCurrentAccount() {
         return currentAccount;
     }
-
+    static ReentrantLock lock = new ReentrantLock();
     public static PackageOut formThePackageOut(CommandType command, List<Serializable> arrayArg) {
         PackageOut packageOut = new PackageOut();
         packageOut.remake();
@@ -55,13 +57,20 @@ public class ClientNetMediator {
         }
         @Override
         public void run(){
-            System.out.println("start thread!");
-            GlobalWindow.getInstance().setHostAndPortColor(Color.PINK);
+            lock.lock();
+            System.out.println("locked in thread");
             try {
+                System.out.println("start thread!");
+                GlobalWindow.getInstance().setHostAndPortColor(Color.PINK);
+           
                 Answer.send(packageOut);
+           
                 while(true){
                 //request=new Request();
+                
                 boolean received = request.receive();
+                lock.unlock();
+                System.out.println("unlocked in thread");
                 System.out.println("recieved!");
                 GlobalWindow.getInstance().setHostAndPortColor(Color.GREEN);
                 CompletableFuture.runAsync(()-> {
@@ -92,13 +101,22 @@ public class ClientNetMediator {
     };
     private static Thread th=null;
     public static void sendAndRecieveFromServer(CommandType commandType,PackageOut packageOut) {
+        lock.lock();
+        System.out.println("locked in main");
         if(th!=null){
             th.interrupt();
             System.out.println("end thread!");
         }
         Connection.getInstance().reinit();
+        
+
         th=new Thread(new sendAndRecieve(commandType,packageOut));
+        
         th.start();
+        
+        lock.unlock();
+        System.out.println("unlocked in main");
+        while(lock.isLocked()==false);
     
     }
 }

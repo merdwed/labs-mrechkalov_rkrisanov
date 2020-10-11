@@ -168,6 +168,7 @@ public class GlobalWindow {
                 public void actionPerformed(ActionEvent e) {
                    Locales.getInstance().resetLocale((String)localeComboBox.getSelectedItem());
                    globalPanelClass.refreshGlobalPanel();
+                   update(null);
                 }
             });
             signOutButton.addActionListener(new ActionListener() {
@@ -193,6 +194,7 @@ public class GlobalWindow {
             
             hostTextField.setMaximumSize(new Dimension(150,20));
             portTextField.setMaximumSize(new Dimension(150,20));
+            localeComboBox.setSelectedItem("ru");
     
         }
         private void refreshTopPanel(){
