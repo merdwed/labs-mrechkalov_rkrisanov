@@ -85,7 +85,7 @@ public class ClientMain {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                GlobalWindow.getInstance().cleanAndInit();
+                GlobalWindow.getInstance().init();
             }
         });
         System.out.println("client ready to start");

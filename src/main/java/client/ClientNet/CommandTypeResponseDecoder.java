@@ -47,7 +47,7 @@ public class CommandTypeResponseDecoder {
                     ClientNetMediator.sendAndRecieveFromServer(CommandType.SHOW,
                     ClientNetMediator.formThePackageOut(CommandType.SHOW, null)
                     );
-                    GlobalWindow.getInstance().update(null);
+                    //GlobalWindow.getInstance().update(null);
                 }
                 else{
                 GlobalWindow.getInstance().printInformation((String)response.get(index));
@@ -55,7 +55,7 @@ public class CommandTypeResponseDecoder {
             }
             if(cl == ArrayList.class){
                 Dataset.getCurrentInstance().update((ArrayList<Ticket>)(response.get(index)));
-                GlobalWindow.getInstance().update(Dataset.idComparator);
+                GlobalWindow.getInstance().update(null);
             }
             index++;
         }
