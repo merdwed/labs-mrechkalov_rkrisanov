@@ -17,7 +17,9 @@ public class Connection {
     private String hostname = "127.0.0.1";//"localhost";
     private DatagramChannel client=null;
     private SocketAddress serverAddress = new InetSocketAddress(hostname, PORT);
-    {init();}
+    {init();
+
+    }
     private void init()
     {
         try {

@@ -31,92 +31,112 @@ public class ClientNetMediator {
     public static Account getCurrentAccount() {
         return currentAccount;
     }
-    static ReentrantLock lock = new ReentrantLock();
+
+    // static ReentrantLock lock = new ReentrantLock();
+    static ReentrantLock closeLock = new ReentrantLock();
+
     public static PackageOut formThePackageOut(CommandType command, List<Serializable> arrayArg) {
         PackageOut packageOut = new PackageOut();
         packageOut.remake();
         try {
-            packageOut.getObjectOutputStream().writeObject(currentAccount);//нулевым в поток должен идти аккаунт
+            packageOut.getObjectOutputStream().writeObject(currentAccount);// нулевым в поток должен идти аккаунт
             packageOut.getObjectOutputStream().writeObject(command);// Первым в потоке должен быть тип команды
-            CommandTypeParameterDistributor.fillIn(arrayArg,packageOut);//дальше идут параметры
+            CommandTypeParameterDistributor.fillIn(arrayArg, packageOut);// дальше идут параметры
         } catch (IOException e) {
             System.out.println("exception in formThePackageOut");
             e.printStackTrace();
-        } 
+        }
         return packageOut;
     }
-    private static class sendAndRecieve implements Runnable{
+
+    private static class sendAndRecieve implements Runnable {
         CommandType commandType;
         Request request;
         PackageOut packageOut;
-        sendAndRecieve(CommandType commandType, PackageOut packageOut){
-            this.commandType=commandType;
-            this.request=new Request();
+
+        sendAndRecieve(CommandType commandType, PackageOut packageOut) {
+            this.commandType = commandType;
+            this.request = new Request();
             this.packageOut = packageOut;
             System.out.println("Constructor!");
         }
+
         @Override
-        public void run(){
-            lock.lock();
+        public void run() {
+            closeLock.lock();
+            // lock.lock();
             System.out.println("locked in thread");
             try {
                 System.out.println("start thread!");
                 GlobalWindow.getInstance().setHostAndPortColor(Color.PINK);
-           
+
                 Answer.send(packageOut);
-           
-                while(true){
-                //request=new Request();
-                
-                boolean received = request.receive();
-                lock.unlock();
-                System.out.println("unlocked in thread");
-                System.out.println("recieved!");
-                GlobalWindow.getInstance().setHostAndPortColor(Color.GREEN);
-                CompletableFuture.runAsync(()-> {
-                    try {
-                        ArrayList<Object> arr = CommandTypeResponseDecoder.decode(
-                            CommandTypeInformation.ResponsedParametersOfCommndType(commandType),
-                            request.prossessing());
-                        CommandTypeResponseDecoder.process(commandType, arr);
-                        arr.stream().filter(Objects::nonNull).forEach(System.out::println);
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                });
-                Thread.currentThread().sleep(5);
+
+                while (true) {
+                    // request=new Request();
+                    closeLock.unlock();
+                    boolean received = request.receive();
+                    closeLock.lock();
+                    // lock.unlock();
+                    System.out.println("unlocked in thread");
+                    System.out.println("recieved!");
+                    GlobalWindow.getInstance().setHostAndPortColor(Color.GREEN);
+                    CompletableFuture.runAsync(() -> {
+                        try {
+                            ArrayList<Object> arr = CommandTypeResponseDecoder.decode(
+                                    CommandTypeInformation.ResponsedParametersOfCommndType(commandType),
+                                    request.prossessing());
+                            CommandTypeResponseDecoder.process(commandType, arr);
+                            arr.stream().filter(Objects::nonNull).forEach(System.out::println);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    });
+                    Thread.currentThread().sleep(5);
                 }
-            }catch (AsynchronousCloseException|InterruptedException e){
+            } catch (AsynchronousCloseException | InterruptedException e) {
 
-            }catch(UnresolvedAddressException e){
+            } catch (UnresolvedAddressException e) {
 
-            }
-            catch (IOException | IllegalArgumentException e) {
+            } catch (IOException | IllegalArgumentException e) {
                 e.printStackTrace();
                 System.out.println("exception in sendAndRecieve");
             }
-            
+
         }
     };
-    private static Thread th=null;
-    public static void sendAndRecieveFromServer(CommandType commandType,PackageOut packageOut) {
-        lock.lock();
+
+    private static Thread th = null;
+
+    public static void sendAndRecieveFromServer(CommandType commandType, PackageOut packageOut) {
+        closeLock.lock();
+        // lock.lock();
         System.out.println("locked in main");
-        if(th!=null){
+        if (th != null) {
             th.interrupt();
             System.out.println("end thread!");
         }
         Connection.getInstance().reinit();
+
+        th = new Thread(new sendAndRecieve(commandType, packageOut));
+
+        th.start();
+
+
+
+        closeLock.unlock();
+        
         
 
-        th=new Thread(new sendAndRecieve(commandType,packageOut));
-        
-        th.start();
-        
-        lock.unlock();
+
         System.out.println("unlocked in main");
-        while(lock.isLocked()==false);
-    
+        while (closeLock.isLocked() == false);
+        try {
+            Thread.currentThread().sleep(300);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
