@@ -29,7 +29,7 @@ public class Message extends ListResourceBundle {
                     {"coordinates X", "coordinates X"},
                     {"coordinates Y", "coordinates Y"},
                     {"type", "type"},
-                    {"creater", "creater"},
+                    {"creator", "creator"},
                     {"person", "person"},
                     {"location", "location"},
                     {"user", "user"},
@@ -44,6 +44,13 @@ public class Message extends ListResourceBundle {
                     {"create account", "create account"},
                     {"save", "save"},
                     {"delete", "delete"},
+                    {"size", "size"},
+                    {"clear", "clear"},
+                    {"show", "show"},
+                    {"height", "height"},
+                    {"weight", "weight"},
+                    {"sign out", "sign out"},
+                    {"cancel", "cancel"},
             };
 
     public Object[][] getContents() {return contents; }

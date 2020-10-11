@@ -29,7 +29,7 @@ public class Message_es_EC extends ListResourceBundle {
                     {"coordinates X", "coordenadas X"},
                     {"coordinates Y", "coordenadas Y"},
                     {"type", "tipo"},
-                    {"creater", "creador"},
+                    {"creator", "creador"},
                     {"person", "persona"},
                     {"location", "ubicación"},
                     {"user", "usuaria"},
@@ -44,6 +44,13 @@ public class Message_es_EC extends ListResourceBundle {
                     {"create account", "crear una cuenta"},
                     {"save", "salvar"},
                     {"delete", "Eliminar"},
+                    {"size", "Talla"},
+                    {"clear", "claro"},
+                    {"show", "show"},
+                    {"height", "altura"},
+                    {"weight", "peso"},
+                    {"sign out", "desconectar"},
+                    {"cancel", "cancelar"},
             };
 
     public Object[][] getContents() {return contents; }
